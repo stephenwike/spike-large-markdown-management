@@ -1,0 +1,15 @@
+name: Continuous Build
+
+on: 
+    push:
+        branches:
+            - '*/**'
+            - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Say Hello
+      run: |
+        echo "Hello World"
+      working-directory: ./src
