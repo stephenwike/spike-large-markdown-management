@@ -4,6 +4,8 @@ Detailed Design Document for BCT Common Licensing
 This document describes the Design and Implementation of the BCT Common
 Licensing Subsystem.
 
+THIS IS THE BEGINNNING OF THE DOCUMENT
+
 ## Domain
 
 The Common Licensing Subsystem exposes its Domain for consumers to use through means of a Contract.
