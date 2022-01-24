@@ -3,7 +3,6 @@ Push-Location ./docs/ddd
     $files = Get-ChildItem -Recurse -Include *.md -Name
     foreach ($file in $files)
     {
-        echo $file
         $content = Get-Content $file -Raw
         $dddContent = $dddContent.replace("<|$file|>", "$content")
         echo "<|$file|>"
