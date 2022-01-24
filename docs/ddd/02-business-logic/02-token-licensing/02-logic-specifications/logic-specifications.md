@@ -1,47 +1,6 @@
-<details id="token-licensing-details">
-<summary style="font-size: 1.3em">Token Licensing related functionality</summary>
-
-<details id="token-class-overview">
-<summary style="font-size: 1.1em">Class Overview</summary>
-
-<details id="token-validators">
-<summary>Validators</summary>
-
-|Validator Name|Description|
-|--|--|
-|[**BaseValidator**](../src/Bct.Common.Licensing.Business/Validators/DeviceLicense/BaseValidator.cs)|The base validator class with common rules that are used in other validators.|
-|[AddTokensValidator](../src/Bct.Common.Licensing.Business/Validators/TokenLicenseValidators/AddTokensValidator.cs)|Used to validate whether the ``AddTokens`` command can be executed.|
-|[ConsumeTokensValidator](../src/Bct.Common.Licensing.Business/Validators/TokenLicenseValidators/ConsumeTokensValidator.cs)|Used to validate whether the ``ConsumeTokens`` command can be executed.|
-|[CreateTokenLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/TokenLicenseValidators/CreateTokenLicenseValidator.cs)|Used to validate whether the ``CreateTokenLicense`` command can be executed.|
-</details>
-
-<details id="token-managers">
-<summary>Managers
-</summary>
-
-|Manager Name|Description|
-|--|--|
-|[AddTokensManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicense/AddTokensManager.cs)|Contains the business logic for the ``AddTokensHandler``.|
-|[ConsumeTokensManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicense/ConsumeTokensManager.cs)|Contains the business logic for the ``ConsumeTokensHandler``.|
-|[CreateTokenLicenseManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicense/CreateTokenLicenseManager.cs)|Contains the business logic for the ``CreateTokenLicenseHandler``.|
-|[GetTokenLicenseByIdManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicenseManagers/GetTokenLicenseByIdManager.cs)|Contains the business logic for the ``GetTokenLicenseByIdHandler`` handler.|
-|[GetTokenLicensesManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicenseManagers/GetTokenLicensesManager.cs)|Contains the business logic for the ``GetTokenLicensesByFilterHandler`` and ``GetAllTokenLicensesHandler`` handlers.|
-</details>
-
-<details id="token-handlers">
-<summary>Handlers</summary>
-
-|Handler Name|Description|
-|--|--|
-|[CreateTokenLicenseHandler](../src/Bct.Common.Licensing.Business/Handlers/TokenLicense/CreateTokenLicenseHandler.cs)|Handles the command ``CreateTokenLicense`` in the system.|
-</details>
-
-</details> <!-- Closes Class Overview -->
-
-<details id="token-business-overview">
 <summary style="font-size: 1.1em">Business Logic Specifications</summary>
 
-## Creating a Token License
+### Creating a Token License
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./spec/CreateTokenLicense.spec) -->
 <!-- The below code snippet is automatically added from ./spec/CreateTokenLicense.spec -->
@@ -87,7 +46,7 @@ Then:  The system creates a non-trial TokenLicense
 
 ![Creating a token license flow](drawio/images/CreateTokenLicense-Page-1.png)
 
-## Consume Tokens (no grace period)
+### Consume Tokens (no grace period)
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./spec/ConsumeTokens.spec) -->
 <!-- The below code snippet is automatically added from ./spec/ConsumeTokens.spec -->
@@ -188,7 +147,7 @@ Then
 
 ![Consuming tokens](drawio/images/ConsumeTokens-Page-1.png)
 
-## Consume Tokens (grace period)
+### Consume Tokens (grace period)
 
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./spec/ConsumeTokensGracePeriod.spec) -->
@@ -247,7 +206,3 @@ Then
 <!-- 
 ![Consuming tokens](drawio/images/ConsumeTokensGracePeriod-Page-1.png)
 -->
-</details> <!-- Closes Business Specifications -->
-
-</details> <!-- Closes Token Licensing Related functionality -->
-

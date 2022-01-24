@@ -1,58 +1,3 @@
-<details>
-<summary style="font-size: 1.3em";>Device Licensing related functionality</summary>
-
-<details id="class-overview">
-<summary style="font-size: 1.1em">Class Overview</summary>
-
-<details id="device-validators">
-<summary>Validators</summary>
-
-|Validator Name|Description|
-|--|--|
-|[**BaseValidator**](../src/Bct.Common.Licensing.Business/Validators/DeviceLicense/BaseValidator.cs)|The base validator class with common rules that are used in other validators.|
-|[**BaseCreateLicenseValidator**](../src/Bct.Common.Licensing.Business/Validators/DeviceLicense/BaseCreateLicenseValidator.cs)|The base validator class for CreateLicense validators.|
-|[**BaseQueryValidator**](../src/Bct.Common.Licensing.Business/Validators/BaseQueryValidator.cs)| Inherits from the ``BaseValidator`` and is used to validate all the ``GetAll`` and ``GetByFilter`` queries.|
-|[GetByIdValidator](../src/Bct.Common.Licensing.Business/Validators/GetByIdValidator.cs)|Inherits from ``BaseQueryValidator`` and is used to validate all the ``GeyById`` queries, including ``GetDeviceLicenseById``, ``GetTokenLicenseById``, and ``GetFeatureLicenseById``.|
-|[AllocateLicenseToDeviceValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/AllocateLicenseToDeviceValidator.cs)|Used to validate whether the ``AllocateLicenseToDevice`` command can be executed.|
-|[CreateDeviceLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/CreateDeviceLicenseValidator.cs)|Used to validate whether the ``CreateDeviceLicense`` command can be executed.|
-|[DeallocateLicenseFromDeviceValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/DeallocateLicenseFromDeviceValidator.cs)|Used to validate whether the ``DeallocateLicenseFromDevice`` command can be executed.|
-|[DeleteLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/DeleteLicenseValidator.cs)|Used to validate whether the ``DeleteLicense`` command can be executed.|
-|[SetMaximumAllocationsValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/SetMaximumAllocationsValidator.cs)|Used to validate whether the ``SetMaximumAllocationsValue`` command can be executed.|
-</details>
-
-<details id="device-managers">
-<summary>Managers
-</summary>
-
-|Manager Name|Description|
-|--|--|
-|[AllocateLicenseManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/DeviceLicenseManager.cs)|Contains the business logic for the ``AllocateLicenseToDeviceHandler``. 
-|[CreateLicenseManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/CreateLicenseManager.cs)|Contains the business logic for the ``CreateDeviceLicenseHandler``. 
-|[DeallocateLicenseManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/DeallocateLicenseManager.cs)|Contains the business logic for the ``DeallocateLicenseFromDeviceHandler``. 
-|[DeleteLicenseManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/DeleteLicenseManager.cs)|Contains the business logic for the ``DeleteLicenseHandler`` handler. 
-|[GetDeviceLicenseByIdManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/GetDeviceLicenseByIdManager.cs)|Contains the business logic for the ``GetDeviceLicenseByIdHandler`` handler. 
-|[GetDeviceLicensesManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/GetDeviceLicensesManager.cs)|Contains the business logic for the ``GetDeviceLicensesByFilterHandler`` and ``GetAllDeviceLicensesHandler`` handlers. 
-|[SetMaximumAllocationsManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/SetMaximumAllocationsManager.cs)|Contains the business logic for the ``SetMaximumAllocationsValueHandler`` handler.
-</details>
-
-<details id="device-handlers">
-<summary>Handlers</summary>
-
-|Handler Name|Description|
-|--|--|
-|[AllocateLicenseToDeviceHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/AllocateLicenseToDeviceHandler.cs)|Handles the command ``AllocateLicenseToDevice`` in the system.|
-|[CreateDeviceLicenseHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/CreateDeviceLicenseHandler.cs)|Handles the command ``CreateDeviceLicense`` in the system.|
-|[DeallocateLicenseFromDeviceHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/DeallocateLicenseFromDeviceHandler.cs)|Handles the command ``DeallocateLicenseFromDevice`` in the system.|
-|[DeleteLicenseHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/DeleteLicenseHandler.cs)|Handles the ``DeleteLicense`` command.|
-|[SetMaximumAllocationsValueHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/SetMaximumAllocationsValueHandler.cs)|Handles the command ``SetMaximumAllocationsValue`` in the system.|
-|[GetAllDeviceLicensesHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/GetAllDeviceLicensesHandler.cs)|Handles the query ``GetAllDeviceLicenses`` in the system.|
-|[GetDeviceLicensesByFilterHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/GetDeviceLicensesByFilterHandler.cs)|Handles the query ``GetDeviceLicensesByFilter`` in the system.|
-</details>
-
-
-</details><!-- This closes the Class Overview tab.-->
-
-<details id="Business Logic Specifications">
 <summary style="font-size: 1.1em">Specifications</summary>
 
 ### Creating Device License
@@ -276,7 +221,3 @@ Then
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 ![Logic flow executed by the system for deleting a device license.](./drawio/images/DeleteLicense-Page-1.png)
-
-</details> <!-- This closes the Business Logic Specifications tab. -->
-
-</details><!-- This closes the Device Licensing related functionality tab. -->
