@@ -18,7 +18,7 @@ jobs:
 
     - uses: docker://pandoc/latex:2.9
       with:
-        args: --output=output/result.md --verbose -t markdown ${{ steps.files_list.outputs.files }}
+        args: --output=output/results.txt ${{ steps.files_list.outputs.files }}
 
     - name: Commit changed files
       uses: stefanzweifel/git-auto-commit-action@v4
@@ -27,4 +27,4 @@ jobs:
         commit_user_name: "StephenWike"
         commit_user_email: "stephen.c.wise@gmail.com"
         commit_author: "Stephen Wike"
-        file_pattern: "*.md"
+        file_pattern: "*.txt"
