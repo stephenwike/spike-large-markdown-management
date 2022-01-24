@@ -7,9 +7,11 @@ on:
             - '*'
 jobs:
   build:
+    defaults:
+      working-directory: "/src"
     container:
       volumes:
-        - ($pwd):/
+        - /:/src
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
