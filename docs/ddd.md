@@ -10,7 +10,6 @@ Domain
 The Common Licensing Subsystem exposes its Domain for consumers to use
 through means of a Contract.
 
-```{=html}
 <details>
 <summary>🧱Entities</summary>
 
@@ -24,8 +23,6 @@ through means of a Contract.
 |[TokenGracePeriod](../src/Bct.Common.Licensing.Contract/Entities/TokenGracePeriod.cs)|Represents a grace period on a Token License.|
 
 </details>
-```
-```{=html}
 <details>
 <summary>❗ Commands</summary>
 
@@ -45,8 +42,6 @@ through means of a Contract.
 |[SetTokenGracePeriod](../src/Bct.Common.Licensing.Contract/Commands/SetTokenGracePeriod.cs).|Sets the time in days that a grace period may last as well as maximum token value that can be used during grace period.|
 
 </details>
-```
-```{=html}
 <details>
 <summary>⚡Events</summary>
 
@@ -65,8 +60,6 @@ through means of a Contract.
 |[TokensConsumed](../src/Bct.Common.Licensing.Contract/Events/TokensConsumed.cs)|The system emits this event when tokens were consumed from a ``TokenLicense``.|
 |[TokenGracePeriodCreated](../src/Bct.Common.Licensing.Contract/Events/TokenGracePeriodCreated.cs)|The system emits this event when a Grace Period was created for a ``TokenLicense``.|
 </details>
-```
-```{=html}
 <details>
 <summary>❓Queries</summary>
 
@@ -83,8 +76,6 @@ through means of a Contract.
 |[GetTokenLicensesByFilter](../src/Bct.Common.Licensing.Contract/Queries/GetTokenLicensesByFilter.cs)|Gets all not-deleted ``TokenLicense`` by specific filters.
 
 </details>
-```
-```{=html}
 <details>
 <summary>➡️Responses</summary>
 
@@ -96,8 +87,6 @@ through means of a Contract.
 |[GetDeviceLicensesResponse](../src/Bct.Common.Licensing.Contract/Messages/GetDeviceLicensesResponse.cs)|``GetDeviceLicenses``|Contains a List of queried device licenses.|
 
 </details>
-```
-```{=html}
 <details>
 <summary>🛎️Significant Classes</summary>
 
@@ -108,11 +97,10 @@ through means of a Contract.
 |[**LicenseType**](../src/Bct.Common.Licensing.Contract/Constants/LicenseType.cs)|Enumeration describing the LicenseType of any given license.|
 |[**RestRoutes**](../src/Bct.Common.Licensing.Contract/Constants/RestRoutes.cs)|Constants that define the set of defined licensing service REST routes.|
 </details>
-```
+
 Business Logic
 --------------
 
-```{=html}
 <details>
 <summary style="font-size: 1.3em";>Device Licensing related functionality</summary>
 
@@ -395,11 +383,7 @@ Then
 </details> <!-- This closes the Business Logic Specifications tab. -->
 
 </details>
-```
-```{=html}
 <!-- This closes the Device Licensing related functionality tab. -->
-```
-```{=html}
 <details id="token-licensing-details">
 <summary style="font-size: 1.3em">Token Licensing related functionality</summary>
 
@@ -652,10 +636,8 @@ Then
 </details> <!-- Closes Business Specifications -->
 
 </details>
-```
-```{=html}
 <!-- Closes Token Licensing Related functionality -->
-```
+
 Data Access
 -----------
 
