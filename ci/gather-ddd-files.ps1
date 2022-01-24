@@ -1,4 +1,5 @@
 Push-Location ./docs/ddd
-    $files = Get-ChildItem -Path ./ -Recurse -Name -Include *.md 
+    $files = Get-ChildItem -Recurse -Include *.md -Name | 
+    ForEach-Object -Process {Join-Path -Path "docs/ddd" -ChildPath $_}
     Write-Output "::set-output name=files::$files"
 Pop-Location
