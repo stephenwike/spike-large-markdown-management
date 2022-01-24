@@ -5,6 +5,7 @@ Push-Location ./docs/ddd
     {
         $content = Get-Content $file -Raw
         $dddContent = $dddContent.replace("<|$file|>", "$content")
+        echo "<|$file|>"
     }
     Set-Content ../ddd.md $dddContent
     
