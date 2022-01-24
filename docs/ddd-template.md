@@ -23,7 +23,7 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 </details>
 
 <details>
-<|01-domain/04-queries/queries.md|>
+{{01-domain/04-queries/queries.md}}
 </details>
 
 <details>
@@ -41,10 +41,10 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 ----------------------------------------------------------------------------------->
 
 <details>
-<summary style="font-size: 1.3em";>Device Licensing related functionality</summary>
+<summary style="font-size: 1.3em";>Device Licensing related functionality</summary><blockquote>
 
 <details id="class-overview">
-<summary style="font-size: 1.1em">Class Overview</summary>
+<summary style="font-size: 1.1em">Class Overview</summary><blockquote>
 
 <details id="device-validators">
 <|02-business-logic/01-device-licensing/01-class-overview/01-validators/validators.md|>
@@ -58,13 +58,13 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 <|02-business-logic/01-device-licensing/01-class-overview/03-handlers/handlers.md|>
 </details>
 
-</details><!--This closes class overview details-->
+</blockquote></details><!--This closes class overview details-->
 
 <details id="Business Logic Specifications">
 <|02-business-logic/01-device-licensing/02-logic-specifications/logic-specifications.md|>
 </details>
 
-</details><!--This closes device licensing related functionality details-->
+</blockquote></details><!--This closes device licensing related functionality details-->
 
 <!---------------------------------------------------------------------------------
                 Token License Related Functionality
