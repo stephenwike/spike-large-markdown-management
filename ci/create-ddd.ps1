@@ -1,9 +1,10 @@
 Push-Location ./docs/ddd
     $ddd = Get-ChildItem ddd.md
-    $files = Get-ChildItem -Recurse -Include *.md -Name
+    $files = Get-ChildItem -Recurse -Include *.md
     foreach ($file in $files)
     {
         $content = Get-Content $file
-        $ddd -match "<|$file.Name|>" -replace $content
+        $name = Get-ChildItem $file -Name
+        $ddd -match "<|$name|>" -replace "$content"
     } 
 Pop-Location
