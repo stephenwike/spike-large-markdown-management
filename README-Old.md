@@ -1,1 +1,0 @@
-# spike-large-markdown-management
