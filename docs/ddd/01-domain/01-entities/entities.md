@@ -1,7 +1,5 @@
 <summary>🧱Entities</summary>
 
-SOME NEW CONTENT
-
 |Entity Name|Description|
 |--|--|
 |[**BaseLicense**](../src/Bct.Common.Licensing.Contract/Entities/BaseLicense.cs)|Base class inherited by the following entities: ``DeviceLicense``, ``FeatureLicense`` and ``TokenLicense``|
