@@ -1,5 +1,5 @@
 Push-Location ./docs/ddd
-    Write-Host | Get-ChildItem -Recurse -Include *.md -Name
+    Get-ChildItem -Recurse -Include *.md -Name | Write-Host
     Write-Host "END OF LIST"
     $dddContent = Get-Content ../ddd-template.md
     $files = Get-ChildItem -Recurse -Include *.md -Name
