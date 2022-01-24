@@ -4,14 +4,5 @@ This document describes the Design and Implementation of the BCT Common Licensin
 
 
 
-<<[01-domain/domain.md]
+<|01-domain\domain.md|>
 
-<<[./01-domain/domain.md]
-
-<<[ddd/01-domain/domain.md]
-
-<<[./ddd/01-domain/domain.md]
-
-<<[docs/ddd/01-domain/domain.md]
-
-<<[./docs/ddd/01-domain/domain.md]
