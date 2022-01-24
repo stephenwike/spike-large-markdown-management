@@ -11,39 +11,11 @@ THIS IS THE BEGINNNING OF THE DOCUMENT
 The Common Licensing Subsystem exposes its Domain for consumers to use through means of a Contract.
 
 <details>
-<summary>🧱Entities</summary>
-
-SOME NEW CONTENT
-
-|Entity Name|Description|
-|--|--|
-|[**BaseLicense**](../src/Bct.Common.Licensing.Contract/Entities/BaseLicense.cs)|Base class inherited by the following entities: ``DeviceLicense``, ``FeatureLicense`` and ``TokenLicense``|
-|[DeviceLicense](../src/Bct.Common.Licensing.Contract/Entities/DeviceLicense.cs)|Represents a Device License.|
-|[FeatureLicense](../src/Bct.Common.Licensing.Contract/Entities/FeatureLicense.cs)|Represents a Feature License.|
-|[TokenLicense](../src/Bct.Common.Licensing.Contract/Entities/TokenLicense.cs)|Represents a Token License.
-|[DeviceLicenseAllocation](../src/Bct.Common.Licensing.Contract/Entities/DeviceLicenseAllocation.cs)|Represents allocations of devices of a Device License.|
-|[TokenGracePeriod](../src/Bct.Common.Licensing.Contract/Entities/TokenGracePeriod.cs)|Represents a grace period on a Token License.|
-
+<|01-domain/01-entities/entities.md|>
 </details>
 
 <details>
-<summary>❗ Commands</summary>
-
-|Command Name|Description|
-|--|--|
-|[AllocateLicenseToDevice](../src/Bct.Common.Licensing.Contract/Commands/AllocateLicenseToDevice.cs)|Attempts to create a ``DeviceLicenseAllocation``, consuming allocations from a ``DeviceLicense``.|
-|[**BaseCommand**](../src/Bct.Common.Licensing.Contract/Commands/BaseCommand.cs)|Base Command inherited by all commands in the Contract.|
-|[**BaseCreateLicenseCommand**](../src/Bct.Common.Licensing.Contract/Commands/BaseLicenseCreationCommand.cs)|Base Command inherited by the following commands: ``CreateDeviceLicense``, ``CreateTokenLicense`` and ``CreateTokenLicense``.|
-|[ConsumeTokens](../src/Bct.Common.Licensing.Contract/Commands/ConsumeTokens.cs)|Consumes Tokens from a ``TokenLicense``.|
-|[CreateDeviceLicense](../src/Bct.Common.Licensing.Contract/Commands/CreateDeviceLicense.cs)|Creates a ``DeviceLicense`` in the system.|
-|[CreateFeatureLicense](../src/Bct.Common.Licensing.Contract/Commands/CreateFeatureLicense.cs)|Creates a ``FeatureLicense`` in the system.|
-|[CreateTokenLicense](../src/Bct.Common.Licensing.Contract/Commands/CreateTokenLicense.cs)|Creates a ``TokenLicense`` in the system.|
-|[DeleteLicense](../src/Bct.Common.Licensing.Contract/Commands/DeleteLicense.cs)|Deletes any license from the system.|
-|[SetAvailableTokensValue](../src/Bct.Common.Licensing.Contract/Commands/SetAvailableTokensValue.cs)|Sets the available tokens value of a ``TokenLicense`` entity.|
-|[SetIsEnabledValue](../src/Bct.Common.Licensing.Contract/Commands/SetIsEnabledValue.cs)|Sets the IsEnabled value of a ``FeatureLicense`` in the system.|
-|[SetMaximumAllocationsValue](../src/Bct.Common.Licensing.Contract/Commands/SetMaximumAllocationsValue.cs)|Sets the maximum number of allocations of a ``DeviceLicense`` in the system.|
-|[SetTokenGracePeriod](../src/Bct.Common.Licensing.Contract/Commands/SetTokenGracePeriod.cs).|Sets the time in days that a grace period may last as well as maximum token value that can be used during grace period.|
-
+<|01-domain/02-commands/commands.md|>
 </details>
 
 <details>
@@ -67,20 +39,7 @@ SOME NEW CONTENT
 </details>
 
 <details>
-<summary>❓Queries</summary>
-
-|Query Name|Description|
-|--|--|
-|[**BaseQuery**](../src/Bct.Common.Licensing.Contract/Queries/BaseQuery.cs)|Base Query inherited by all queries in the Contract.|
-|[GetAllDeviceLicenses](../src/Bct.Common.Licensing.Contract/Queries/GetAllDeviceLicenses.cs)|Gets all not-deleted ``DeviceLicense``.|
-|[GetDeviceLicensesByFilter](../src/Bct.Common.Licensing.Contract/Queries/GetDeviceLicensesByFilter.cs)|Gets all not-deleted ``DeviceLicense`` by specific filters.|
-|[GetDeviceLicenseById](../src/Bct.Common.Licensing.Contract/Queries/GetDeviceLicenseById.cs)|Gets not-deleted ``DeviceLicense`` by id.|
-|[GetDeviceAllocationsByLicenseId](../src/Bct.Common.Licensing.Contract/Queries/GetDeviceAllocationsByLicenseId.cs)|Gets all non-released (default) `DeviceLicenseAllocation` of a ``DeviceLicense``.|
-|[GetAllFeatureLicenses](../src/Bct.Common.Licensing.Contract/Queries/GetAllFeatureLicenses.cs)|Gets all not-deleted ``FeatureLicense``.|
-|[GetFeatureLicensesByFilter](../src/Bct.Common.Licensing.Contract/Queries/GetFeatureLicensesByFilter.cs)|Gets all not-deleted ``FeatureLicense`` by specific filters.|
-|[GetAllTokenLicenses](../src/Bct.Common.Licensing.Contract/Queries/GetAllTokenLicenses.cs)|Gets all not-deleted ``TokenLicense``.|
-|[GetTokenLicensesByFilter](../src/Bct.Common.Licensing.Contract/Queries/GetTokenLicensesByFilter.cs)|Gets all not-deleted ``TokenLicense`` by specific filters.
-
+{{01-domain/04-queries/queries.md}}
 </details>
 
 <details>
@@ -114,10 +73,10 @@ SOME NEW CONTENT
 ----------------------------------------------------------------------------------->
 
 <details>
-<summary style="font-size: 1.3em";>Device Licensing related functionality</summary>
+<summary style="font-size: 1.3em";>Device Licensing related functionality</summary><blockquote>
 
 <details id="class-overview">
-<summary style="font-size: 1.1em">Class Overview</summary>
+<summary style="font-size: 1.1em">Class Overview</summary><blockquote>
 
 <details id="device-validators">
 <summary>Validators</summary>
@@ -166,7 +125,7 @@ SOME NEW CONTENT
 
 </details>
 
-</details><!--This closes class overview details-->
+</blockquote></details><!--This closes class overview details-->
 
 <details id="Business Logic Specifications">
 <summary style="font-size: 1.1em">Specifications</summary>
@@ -394,7 +353,7 @@ Then
 ![Logic flow executed by the system for deleting a device license.](./drawio/images/DeleteLicense-Page-1.png)
 </details>
 
-</details><!--This closes device licensing related functionality details-->
+</blockquote></details><!--This closes device licensing related functionality details-->
 
 <!---------------------------------------------------------------------------------
                 Token License Related Functionality
