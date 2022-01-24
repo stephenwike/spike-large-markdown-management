@@ -2,3 +2,6 @@
 
 This document describes the Design and Implementation of the BCT Common Licensing Subsystem.
 
+```include
+/docs/ddd/01-domain/domain.md
+```

@@ -18,7 +18,7 @@ jobs:
 
     - uses: docker://pandoc/latex:2.9
       with:
-        args: --output=docs/ddd.md --from markdown_strict --to markdown_strict ${{ steps.files_list.outputs.files }}
+        args: --output=docs/ddd.md --filter pandoc-include --from markdown_strict --to markdown_strict /docs/ddd/ddd.md
 
     - name: Commit changed files
       uses: stefanzweifel/git-auto-commit-action@v4
