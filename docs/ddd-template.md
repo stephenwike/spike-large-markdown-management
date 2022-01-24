@@ -23,7 +23,7 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 </details>
 
 <details>
-{{01-domain/04-queries/queries.md}}
+<|01-domain/04-queries/queries.md|>
 </details>
 
 <details>
@@ -46,9 +46,9 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 <details id="class-overview">
 <summary style="font-size: 1.1em">Class Overview</summary><blockquote>
 
-<details id="device-validators">
+<details id="device-validators"><blockquote>
 <|02-business-logic/01-device-licensing/01-class-overview/01-validators/validators.md|>
-</details>
+<blockquote></details>
 
 <details id="device-managers">
 <|02-business-logic/01-device-licensing/01-class-overview/02-managers/managers.md|>
