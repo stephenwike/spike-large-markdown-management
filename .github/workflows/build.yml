@@ -11,14 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: create file list
-      id: files_list
+    - name: generate DDD
       shell: pwsh
-      run: ./ci/gather-ddd-files.ps1
-
-    - uses: docker://pandoc/latex:2.9
-      with:
-        args: --output=docs/ddd.md --from markdown_mmd --to markdown_mmd ./docs/ddd/ddd.md
+      run: ./ci/compile-ddd.ps1
 
     - name: Commit changed files
       uses: stefanzweifel/git-auto-commit-action@v4
