@@ -32,4 +32,4 @@ jobs:
         commit_user_name: "StephenWike"
         commit_user_email: "stephen.c.wise@gmail.com"
         commit_author: "Stephen Wike"
-        file_pattern: "*.png *.md *.pdf"
+        file_pattern: "*.pdf"
