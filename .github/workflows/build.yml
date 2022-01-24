@@ -17,9 +17,9 @@ jobs:
       run: ./ci/gather-ddd-files.ps1
 
     - uses: docker://pandoc/latex:2.9
+      working-directory: ./docs/ddd
       with:
         args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-        
 
     - name: Commit changed files
       uses: stefanzweifel/git-auto-commit-action@v4
