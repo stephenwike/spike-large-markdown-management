@@ -23,8 +23,13 @@ jobs:
     - uses: docker://pandoc/latex:2.9
       with:
         args: --output=output/result.pdf ${{ steps.files_list.outputs.files }}
-          
-    - uses: actions/upload-artifact@master
+        
+
+    - name: Commit changed files
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        name: output
-        path: output
+        commit_message: "design: sync draw.io exported files"
+        commit_user_name: "StephenWike"
+        commit_user_email: "stephen.c.wise@gmail.com"
+        commit_author: "Stephen Wike"
+        file_pattern: "*.png *.md"
