@@ -4,16 +4,12 @@ Detailed Design Document for BCT Common Licensing
 This document describes the Design and Implementation of the BCT Common
 Licensing Subsystem.
 
-THIS IS THE BEGINNNING OF THE DOCUMENT
-
 ## Domain
 
 The Common Licensing Subsystem exposes its Domain for consumers to use through means of a Contract.
 
 <details>
 <summary>🧱Entities</summary>
-
-SOME NEW CONTENT
 
 |Entity Name|Description|
 |--|--|
@@ -134,7 +130,7 @@ SOME NEW CONTENT
 |[DeleteLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/DeleteLicenseValidator.cs)|Used to validate whether the ``DeleteLicense`` command can be executed.|
 |[SetMaximumAllocationsValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/SetMaximumAllocationsValidator.cs)|Used to validate whether the ``SetMaximumAllocationsValue`` command can be executed.|
 
-<blockquote></details>
+</blockquote></details>
 
 <details id="device-managers">
 <summary>Managers</summary>
