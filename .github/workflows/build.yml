@@ -14,6 +14,8 @@ jobs:
     - name: generate DDD
       shell: pwsh
       run: ./ci/compile-ddd.ps1
+      volumes:
+        - ($pwd):/
 
     - name: Commit changed files
       uses: stefanzweifel/git-auto-commit-action@v4
