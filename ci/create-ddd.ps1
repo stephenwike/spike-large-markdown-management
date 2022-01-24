@@ -6,6 +6,6 @@ Push-Location ./docs/ddd
         $content = Get-Content $file -Raw
         $dddContent.replace("<|$file|>", "$content")
     }
-    Set-Content ../dddmd $dddContent
+    Set-Content ../ddd.md $dddContent
     
 Pop-Location
