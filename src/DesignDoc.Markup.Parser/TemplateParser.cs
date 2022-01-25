@@ -1,11 +1,25 @@
+using System.Text;
 using System.Text.RegularExpressions;
-using DesignDoc.Markup.Parser;
+using DesignDoc.Markup.Parser.DataStructs;
+
+namespace DesignDoc.Markup.Parser;
 
 public class TemplateParser
 {
-    public TemplateGraph Parse(string template)
+    private readonly MarkupSettings _settings;
+    private StringBuilder _stringBuilder;
+
+    public TemplateParser(MarkupSettings settings)
+    {
+        _settings = settings;
+        _stringBuilder = new StringBuilder();
+    }
+    
+    public void Parse(string template, FileGraph fileGraph)
     {
         var lineCount = 0;
+        var activeFileNode = fileGraph.Root;
+        
         using (var reader = new StringReader(template))
         {
             ++lineCount;
@@ -13,31 +27,18 @@ public class TemplateParser
             while((line = reader.ReadLine()) != null)
             {
                 Regex regex = new Regex(MarkupPatterns.TemplateParserPattern);
-                var matches = regex.Matches(line);
-                
-                // Matches should only return one header per line.
-                if (matches.Count > 1)
+                var match = regex.Match(line);
+                if (match.Success)
                 {
-                    var message = string.Format(
-                        "Bad syntax '{match}' found in template ({line},{index}).  Tags must be limited to one per line.",
-                        matches[1].Value, lineCount, matches[1].Index
-                    );
-                    throw new Exception(message);
+                    activeFileNode?.UpdateNode(match, _settings, lineCount);
+                    activeFileNode?.AddLines(_stringBuilder);
+                    activeFileNode = activeFileNode?.Next();
                 }
-
-                // If there is a match, build node.
-                var match = matches.FirstOrDefault();
-                if (match != null)
+                else
                 {
-                    var header = match.Groups["Header"] ?? throw new Exception("Null Header Group");
-                    var page = match.Groups["Page"] ?? throw new Exception("Null Page Group");
-                    var tabs = match.Groups["Tabs"]?.Value?.Length ?? throw new Exception("Null Tabs Group");
-                    
-                    
+                    _stringBuilder.AppendLine(line);
                 }
             }
         }
-
-        return new TemplateGraph();
     }
 }

@@ -11,7 +11,7 @@ public class TemplateParserTests
     public void Parse_GivenValidTemplate_ShouldReturnMatchingGraph(string validTemplate)
     {
         // Arrange
-        var parser = new TemplateParser();
+        var parser = new TemplateParser(new MarkupSettings());
 
         // Act
         var result = parser.Parse(validTemplate);
@@ -25,7 +25,7 @@ public class TemplateParserTests
     public void Validate_GivenInvalidTags_ShouldGiveReturnNull(string invalidTemplate)
     {
         // Arrange
-        var parser = new TemplateParser();
+        var parser = new TemplateParser(new MarkupSettings());
 
         // Act
         var result = parser.Parse(invalidTemplate);

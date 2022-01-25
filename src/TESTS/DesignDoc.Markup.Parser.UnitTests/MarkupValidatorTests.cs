@@ -11,7 +11,7 @@ public class MarkupValidatorTests
     public void Validate_GivenValidTags_ShouldGiveReturnTrue(string validTemplate)
     {
         // Arrange
-        var validator = new MarkupValidator();
+        var validator = new TemplateValidator();
 
         // Act
         var result = validator.Validate(validTemplate);
@@ -25,7 +25,7 @@ public class MarkupValidatorTests
     public void Validate_GivenInvalidTags_ShouldGiveReturnFalse(string invalidTemplate)
     {
         // Arrange
-        var validator = new MarkupValidator();
+        var validator = new TemplateValidator();
 
         // Act
         var result = validator.Validate(invalidTemplate);

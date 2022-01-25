@@ -2,7 +2,7 @@
 
 namespace DesignDoc.Markup.Parser;
 
-public class MarkupValidator
+public class TemplateValidator
 {
     public bool Validate(string template)
     {
