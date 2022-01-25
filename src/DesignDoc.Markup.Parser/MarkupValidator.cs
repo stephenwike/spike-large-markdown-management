@@ -2,9 +2,9 @@
 
 namespace DesignDoc.Markup.Parser;
 
-public static class DesignDocMarkupParser
+public class MarkupValidator
 {
-    public static bool Validate(string template)
+    public bool Validate(string template)
     {
         var pattern = @"\{:|:\}";
         var regex = new Regex(pattern);

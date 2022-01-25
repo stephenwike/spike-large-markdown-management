@@ -1,0 +1,16 @@
+using DesignDoc.Markup.TestManagement
+
+public class TemplateInvalidTestData : IEnumerable<object[]>
+{
+    private readonly string _template1 = @"
+{:Header 1:}
+    {:Topic 1}
+        {:SubTopic 1:}";
+
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        yield return new object[] { _template1 };
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
