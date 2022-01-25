@@ -8,10 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDoc.Markup.Parser.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDoc.Markup.TestManagement", "DesignDoc.Markup.TestManagement\DesignDoc.Markup.TestManagement.csproj", "{4EF2C451-015D-484B-8569-B15E631B52E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDoc.Markup.TestManagement", "TESTS\DesignDoc.Markup.TestManagement\DesignDoc.Markup.TestManagement.csproj", "{E85FB52F-23AD-4DD5-9E7E-D9616A841A75}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignDoc.Markup.Parser.TestManagement", "TESTS\DesignDoc.Markup.Parser.TestManagement\DesignDoc.Markup.Parser.TestManagement.csproj", "{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,19 +26,9 @@ Global
 		{4EF2C451-015D-484B-8569-B15E631B52E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EF2C451-015D-484B-8569-B15E631B52E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EF2C451-015D-484B-8569-B15E631B52E4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E85FB52F-23AD-4DD5-9E7E-D9616A841A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E85FB52F-23AD-4DD5-9E7E-D9616A841A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E85FB52F-23AD-4DD5-9E7E-D9616A841A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E85FB52F-23AD-4DD5-9E7E-D9616A841A75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D831EE71-78AF-45FE-8841-FE7BDA0726B7} = {86BEBFBD-ACF6-4EF0-B4AC-CB2EFF28022F}
 		{4EF2C451-015D-484B-8569-B15E631B52E4} = {86BEBFBD-ACF6-4EF0-B4AC-CB2EFF28022F}
-		{E85FB52F-23AD-4DD5-9E7E-D9616A841A75} = {86BEBFBD-ACF6-4EF0-B4AC-CB2EFF28022F}
-		{C6C3F831-7B1D-4D0D-A70D-130C3A0B9F81} = {86BEBFBD-ACF6-4EF0-B4AC-CB2EFF28022F}
 	EndGlobalSection
 EndGlobal
