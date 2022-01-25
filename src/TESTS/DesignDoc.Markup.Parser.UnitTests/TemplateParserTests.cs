@@ -1,3 +1,4 @@
+using DesignDoc.Markup.TestManagement;
 using Xunit;
 using FluentAssertions;
 
@@ -16,12 +17,12 @@ public class TemplateParserTests
         var result = parser.Parse(validTemplate);
         
         // Assert
-        result.Should().BeTrue();
+        result.Should().NotBeNull();
     }
     
     [Theory]
     [ClassData(typeof(TemplateInvalidTestData))]
-    public void Validate_GivenInvalidTags_ShouldGiveReturnFalse(string invalidTemplate)
+    public void Validate_GivenInvalidTags_ShouldGiveReturnNull(string invalidTemplate)
     {
         // Arrange
         var parser = new TemplateParser();
@@ -30,6 +31,6 @@ public class TemplateParserTests
         var result = parser.Parse(invalidTemplate);
         
         // Assert
-        result.Should().BeFalse();
+        result.Should().BeNull();
     }
 }

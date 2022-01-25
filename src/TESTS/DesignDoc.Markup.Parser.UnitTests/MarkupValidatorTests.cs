@@ -1,3 +1,4 @@
+using DesignDoc.Markup.TestManagement;
 using Xunit;
 using FluentAssertions;
 
@@ -7,7 +8,7 @@ public class MarkupValidatorTests
 {
     [Theory]
     [ClassData(typeof(TemplateValidTestData))]
-    public void Validate_GivenValidTags_ShouldGiveReturnTrue()
+    public void Validate_GivenValidTags_ShouldGiveReturnTrue(string validTemplate)
     {
         // Arrange
         var validator = new MarkupValidator();

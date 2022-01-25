@@ -22,7 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\DesignDoc.Markup.Parser\DesignDoc.Markup.Parser.csproj" />
+      <ProjectReference Include="..\..\DesignDoc.Markup.Parser\DesignDoc.Markup.Parser.csproj" />
+      <ProjectReference Include="..\DesignDoc.Markup.TestManagement\DesignDoc.Markup.TestManagement.csproj" />
     </ItemGroup>
 
 </Project>
