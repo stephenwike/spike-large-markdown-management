@@ -2,18 +2,23 @@
 
 public class FileGraphNode
 {
-    public FileGraphNode(FileGraphNode? parent, DirectoryInfo di) : this(parent, di.Name)
-    { Directory = di; }
-    public FileGraphNode(FileGraphNode? parent, FileInfo fi) : this(parent, fi.Name) {}
-    private FileGraphNode(FileGraphNode? parent, string name)
+    public FileGraphNode(FileGraphNode parent, DirectoryInfo di)
+    { Parent = parent; Directory = di; Value = new FileNodeInfo(di.Name); }
+    public FileGraphNode(FileGraphNode parent, FileInfo fi)
+    { Parent = parent; File = fi; Value = new FileNodeInfo(fi.Name);}
+    public FileGraphNode(DirectoryInfo di)
     {
-        Parent = parent;
-        Value = new FileNodeInfo(name);
+        // Constructor for root node.
+        // Root directory shouldn't have to start with numbers.
+        Directory = di;
+        Value = new FileNodeInfo($"01 {di.Name}");
     }
+    
     public FileNodeInfo Value { get; set; }
     public List<FileGraphNode>? Children { get; set; }
     public FileGraphNode? Parent { get; set; }
     public DirectoryInfo? Directory { get; set; }
+    public FileInfo? File { get; set; }
 
     public FileGraphNode? Next() // TODO: Overload ++ instead?
     {
@@ -23,8 +28,8 @@ public class FileGraphNode
     private FileGraphNode? NextRecursive(FileGraphNode node, int lastChildVisitedIndex)
     {
         // Return first child not visited.
-        if (node.Children != null && node.Children.Count < node.Value.FileNumber) 
-            return node.Children[node.Value.FileNumber];
+        if (node.Children != null && lastChildVisitedIndex < node.Children.Count)
+            return node.Children[lastChildVisitedIndex];
         
         // Return null if node doesn't have younger siblings and is root node.
         if (node.Parent == null) return null;

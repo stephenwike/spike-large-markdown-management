@@ -17,7 +17,7 @@ public class DocFilesValidator
         if (children == null) return true;
         for (int i = 0; i < children.Count; ++ i)
         {
-            if (children[i].Value.FileNumber !=  i)
+            if (children[i].Value.FileNumber !=  i + 1)
             {
                 return false;
             }

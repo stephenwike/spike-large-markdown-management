@@ -10,10 +10,10 @@ public static class FileGraphNodeExtensions
         
         // For a single node, get all subNodes
         var dirs = node.Directory.GetDirectories()
-            .Where(x => new Regex(MarkupPatterns.DocumentFilesPattern).IsMatch(x.Name))
+            .Where(x => new Regex(Patterns.DocumentFilesPattern).IsMatch(x.Name))
             .Select(x => new FileGraphNode(node, x)).OrderBy(x => x.Value.FileNumber).ToList();
         var files = node.Directory.GetFiles()
-            .Where(x => new Regex(MarkupPatterns.DocumentFilesPattern).IsMatch(x.Name))
+            .Where(x => new Regex(Patterns.DocumentFilesPattern).IsMatch(x.Name))
             .Select(x => new FileGraphNode(node, x)).ToList();
         node.Children = dirs.Union(files).OrderBy(x => x.Value.FileNumber).ToList();
 
@@ -27,12 +27,12 @@ public static class FileGraphNodeExtensions
     {
         var header = match.Groups["Header"].Value ?? throw new Exception("Null Header Group");
         var page = match.Groups["Page"].Value ?? throw new Exception("Null Page Group");
-        var tabs = (match.Groups["Tabs"]?.Captures.Count ?? 0) / (int)settings.IndentType;
+        var tabs = (match.Groups["Tab"]?.Captures.Count ?? 0) / (int)settings.IndentType; //TODO: Why does this have 1 capture when there is not indent?
         
-        if (node.Value.PageName != page) 
+        if (node.Value.PageName.ToLower() != page.ToLower()) 
             throw new Exception($"Expected {node.Value.PageName} and got {page} on line {lineCount}.");
-        if (node.Depth() != tabs)
-            throw new Exception($"Expected {node.Depth()} indents and got {tabs} on line {lineCount}.");
+        if (node.Depth() - 1 != tabs)
+            throw new Exception($"Expected {node.Depth() - 1} indents and got {tabs} on line {lineCount}.");
         node.Value.Header = header;
     }
 }

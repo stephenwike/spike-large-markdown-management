@@ -2,14 +2,12 @@
 
 using DesignDoc.Markup.Parser;
 
-Console.WriteLine("Hello, World!");
-
 // Resources
-var templateDir = @"C:\spike\spike-large-markdown-management\docs\DDD-template\ddd-template";
+var templateFile = @"C:\spike\spike-large-markdown-management\docs\DDD-template\ddd-template.md";
 var docFilesDir = @"C:\spike\spike-large-markdown-management\docs\DDD-template";
 var outputDir = @"C:\spike\spike-large-markdown-management\docs\DDD.md";
 
 // Probably implemented with flags.
 var settings = new MarkupSettings();
 
-var converter = new MarkupConverter(templateDir, docFilesDir, outputDir, settings).Build();
+new MarkupConverter(templateFile, docFilesDir, outputDir, settings).Build();

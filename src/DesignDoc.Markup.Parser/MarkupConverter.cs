@@ -5,15 +5,15 @@ namespace DesignDoc.Markup.Parser;
 public class MarkupConverter
 {
     private MarkupManager _manager;
-    private string _outputDir;
+    private string _outputFile;
     private MarkupSettings _settings;
-    public MarkupConverter(string templateDir, string docFilesDir, string outputDir, MarkupSettings? settings = null)
+    public MarkupConverter(string templateFile, string docFilesDir, string outputFile, MarkupSettings? settings = null)
     {
         _settings = settings ?? new MarkupSettings();
         
-        var template = File.ReadAllText(templateDir);
-        var docFilesGraph = GetDocumentStructure(docFilesDir);
-        _outputDir = @"C:\spike\spike-large-markdown-management\docs\DDD.md";
+        var template = File.ReadAllText(templateFile);
+        var docFilesGraph = GetDocumentStructure(docFilesDir); // TODO: Move this logic into a filesGraph parser.
+        _outputFile = outputFile;
         
         _manager = new MarkupManager(template, docFilesGraph, _settings);
     }
@@ -27,9 +27,9 @@ public class MarkupConverter
         return graph;
     }
     
-    public async Task Build()
+    public void Build()
     {
         var document = _manager.GenerateDocument();
-        await File.WriteAllTextAsync(_outputDir, document).ConfigureAwait(false);
+        File.WriteAllText(_outputFile, document);
     }
 }

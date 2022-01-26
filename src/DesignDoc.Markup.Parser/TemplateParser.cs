@@ -7,7 +7,7 @@ namespace DesignDoc.Markup.Parser;
 public class TemplateParser
 {
     private readonly MarkupSettings _settings;
-    private StringBuilder _stringBuilder;
+    private readonly StringBuilder _stringBuilder;
 
     public TemplateParser(MarkupSettings settings)
     {
@@ -15,10 +15,10 @@ public class TemplateParser
         _stringBuilder = new StringBuilder();
     }
     
-    public void Parse(string template, FileGraph fileGraph)
+    public string Parse(string template, FileGraph fileGraph)
     {
         var lineCount = 0;
-        var activeFileNode = fileGraph.Root;
+        var activeFileNode = fileGraph.Root.Next(); // Navigate to first node.
         
         using (var reader = new StringReader(template))
         {
@@ -26,12 +26,12 @@ public class TemplateParser
             string? line = string.Empty;
             while((line = reader.ReadLine()) != null)
             {
-                Regex regex = new Regex(MarkupPatterns.TemplateParserPattern);
+                Regex regex = new Regex(Patterns.TemplateParserPattern); // TODO: Could be made better to detect what part of the notation is missing.
                 var match = regex.Match(line);
                 if (match.Success)
                 {
                     activeFileNode?.UpdateNode(match, _settings, lineCount);
-                    activeFileNode?.AddLines(_stringBuilder);
+                    _stringBuilder.AddLines(activeFileNode);
                     activeFileNode = activeFileNode?.Next();
                 }
                 else
@@ -40,5 +40,7 @@ public class TemplateParser
                 }
             }
         }
+
+        return _stringBuilder.ToString();
     }
 }
