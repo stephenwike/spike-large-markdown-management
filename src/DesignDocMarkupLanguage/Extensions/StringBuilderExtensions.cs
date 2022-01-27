@@ -14,7 +14,9 @@ public static class FileGraphNodeExtensions
             lines.AddRange(File.ReadAllLines(node.File.FullName));
         
         builder.AppendLine(); // Add Newline
+        // TODO: Add Collapse and QuoteBlockLogic
         lines.ForEach(x => builder.AppendLine(x));
+        // TODO: Add Collapse and QuoteBlockLogic
         builder.AppendLine(); // Add Newline
     }
 }
