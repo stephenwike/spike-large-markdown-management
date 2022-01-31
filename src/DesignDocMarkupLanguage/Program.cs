@@ -15,5 +15,5 @@ var opts = Parser.Default.ParseArguments<Options>(args)
 //var outputDir = @"C:\spike\spike-large-markdown-management\docs\DDD.md";
 
 // Generate Document
-var manager = new MarkupManager(opts.TemplateFile, opts.DocsFolder, opts.Output);
+var manager = new MarkupManager(Settings.TemplateUri, Settings.DocFilesURi, Settings.OutputUri);
 manager.GenerateDocument();

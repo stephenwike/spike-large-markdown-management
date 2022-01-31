@@ -8,17 +8,17 @@ public class Options
     [Option('t', "templatefile", 
         Required = true, 
         HelpText = "The file path and file name of the DDML template file.")]
-    public Uri TemplateFile { get; set; }
+    public string TemplateFile { get; set; }
     
     [Option('d', "docsfolder", 
         Required = true, 
         HelpText = "The root directory of the documents to be nested into the template.")]
-    public Uri DocsFolder { get; set; }
+    public string DocsFolder { get; set; }
     
     [Option('o', "output", 
         Required = true, 
         HelpText = "The file path and file name of the compiled design document.")]
-    public Uri Output { get; set; }
+    public string Output { get; set; }
     
     [Option('i', "indenttype", 
         Required = false, 

@@ -23,8 +23,9 @@ public class OptionsValidatorTests : IClassFixture<TestFilesFixture>
     {
         // Arrange
         var validator = new OptionsValidator();
-        var docsFolder = new Uri(_testDir, "ValidPath");
-        var templateFile = new Uri(_testDir, "ValidTemplate.md");
+        var docsFolder = "ValidPath";
+        var templateFile = "ValidTemplate.md";
+        
         var options = new Options()
         {
             DocsFolder = docsFolder,
