@@ -33,4 +33,48 @@ public class DocFilesParser
             ParseNodesRecursive(dir);
         }
     }
+
+    public void Enrich(FileGraph fileGraph, string template)
+    {
+        // Flag all non-regular markup
+        var activeFileNode = fileGraph.Root.Next();
+        using (var reader = new StringReader(template))
+        {
+            string? line = string.Empty;
+            while((line = reader.ReadLine()) != null)
+            {
+                var matches = new Regex(Patterns.ReservedMarkup).Matches(line);
+                if (matches.Count == 2)
+                {
+                    if (matches[0].Value == ReservedMarkup.CollapseOpen)
+                    {
+                        // Update docFiles with IsCollapsed flag.
+                        activeFileNode.Value.IsCollapsed = true;
+                    }
+                    activeFileNode = activeFileNode.Next();
+                }
+            }
+        }
+        
+        // Flag all nesting markup
+        activeFileNode = fileGraph.Root.Next();
+        while (activeFileNode != null)
+        {
+            // If nested collapse tags.
+            if (activeFileNode.Value.IsCollapsed &&
+                activeFileNode?.Parent != null &&
+                activeFileNode.Parent.Value.IsCollapsed)
+            {
+                activeFileNode.Parent.Value.IsNesting = true;
+                
+                // If last element in nested collapse tags.
+                if (activeFileNode.Parent.Children.Count() == activeFileNode.Value.FileNumber)
+                {
+                    activeFileNode.Value.IsLastNestedElement = true;
+                }
+            }
+            
+            activeFileNode = activeFileNode.Next();
+        }
+    }
 }

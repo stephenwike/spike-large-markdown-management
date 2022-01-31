@@ -8,39 +8,87 @@ namespace DesignDocMarkupLanguage.Parsers;
 
 public class TemplateParser
 {
-    private readonly StringBuilder _stringBuilder;
-
-    public TemplateParser()
-    {
-        _stringBuilder = new StringBuilder();
-    }
-    
     public string Parse(string template, FileGraph fileGraph)
     {
-        var lineCount = 0;
         var activeFileNode = fileGraph.Root.Next(); // Navigate to first node.
-        
-        using (var reader = new StringReader(template))
+        var lineCount = 0;
+        return BuildDocument(template, (line, builder) =>
         {
             ++lineCount;
-            string? line = string.Empty;
-            while((line = reader.ReadLine()) != null)
+            Regex regex = new Regex(Patterns.TemplateParserPattern);
+            var match = regex.Match(line);
+            if (match.Success)
             {
-                Regex regex = new Regex(Patterns.TemplateParserPattern); // TODO: Could be made better to detect what part of the notation is missing.
-                var match = regex.Match(line);
-                if (match.Success)
+                activeFileNode?.UpdateNode(match, lineCount);
+                builder.AddLines(activeFileNode);
+                activeFileNode = activeFileNode?.Next();
+            }
+            else
+            {
+                builder.AppendLine(line);
+            }
+        });
+    }
+
+    public string Enrich(string template, FileGraph fileGraph)
+    {
+        var activeFileNode = fileGraph.Root.Next(); // Navigate to first node.
+        return BuildDocument(template, (line, builder) =>
+        {
+            var matches = new Regex(Patterns.ReservedMarkup).Matches(line);
+            if (matches.Count == 2)
+            {
+                if (activeFileNode == null) 
+                    throw new IndexOutOfRangeException("Found tag that exceeded the last file/folder in the file docs directory.");
+                
+                builder.AppendLine();
+                if (activeFileNode.Value.IsNesting)
                 {
-                    activeFileNode?.UpdateNode(match, lineCount);
-                    _stringBuilder.AddLines(activeFileNode);
-                    activeFileNode = activeFileNode?.Next();
+                    builder.AppendLine(@"<details>");
+                    builder.AppendLine($"<summary>{activeFileNode?.Value.Summary}</summary><blockquote>");
+                    builder.AppendLine(line);
+                }
+                else if (activeFileNode.Value.IsCollapsed)
+                {
+                    builder.AppendLine(@"<details>");
+                    builder.AppendLine($"<summary>{activeFileNode?.Value.Summary}</summary>");
+                    builder.AppendLine(line);
+                    builder.AppendLine(@"</details>");
                 }
                 else
                 {
-                    _stringBuilder.AppendLine(line);
+                    builder.AppendLine(line);
                 }
+                
+                // Close nested tag if last nested element.
+                if (activeFileNode.Value.IsLastNestedElement)
+                {
+                    builder.AppendLine();
+                    builder.AppendLine(@"</blockquote></details>");
+                }
+                
+                builder.AppendLine();
+                
+                activeFileNode = activeFileNode?.Next();
+            }
+            else
+            {
+                builder.AppendLine(line);
+            }
+        });
+    }
+    
+    private string BuildDocument(string template, Action<string, StringBuilder> act)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        using (var reader = new StringReader(template))
+        {
+            string? line = string.Empty;
+            while((line = reader.ReadLine()) != null)
+            {
+                act(line, stringBuilder);
             }
         }
-
-        return _stringBuilder.ToString();
+        return stringBuilder.ToString();
     }
 }

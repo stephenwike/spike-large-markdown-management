@@ -6,10 +6,15 @@ Licensing Subsystem.
 
 
 
+
+
 <!---------------------------------------------------------------------------------
                Licensing Domain
 ----------------------------------------------------------------------------------->
 The Common Licensing Subsystem exposes its Domain for consumers to use through means of a Contract.
+
+<details>
+<summary>🧱 Entities</summary>
 
 |Entity Name|Description|
 |--|--|
@@ -20,6 +25,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[DeviceLicenseAllocation](../src/Bct.Common.Licensing.Contract/Entities/DeviceLicenseAllocation.cs)|Represents allocations of devices of a Device License.|
 |[TokenGracePeriod](../src/Bct.Common.Licensing.Contract/Entities/TokenGracePeriod.cs)|Represents a grace period on a Token License.|
 
+</details>
+
+
+<details>
+<summary>❗ Commands</summary>
 
 |Command Name|Description|
 |--|--|
@@ -36,6 +46,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[SetMaximumAllocationsValue](../src/Bct.Common.Licensing.Contract/Commands/SetMaximumAllocationsValue.cs)|Sets the maximum number of allocations of a ``DeviceLicense`` in the system.|
 |[SetTokenGracePeriod](../src/Bct.Common.Licensing.Contract/Commands/SetTokenGracePeriod.cs).|Sets the time in days that a grace period may last as well as maximum token value that can be used during grace period.|
 
+</details>
+
+
+<details>
+<summary>⚡ Events</summary>
 
 |Event Name|Description|
 |--|--|
@@ -52,6 +67,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[TokensConsumed](../src/Bct.Common.Licensing.Contract/Events/TokensConsumed.cs)|The system emits this event when tokens were consumed from a ``TokenLicense``.|
 |[TokenGracePeriodCreated](../src/Bct.Common.Licensing.Contract/Events/TokenGracePeriodCreated.cs)|The system emits this event when a Grace Period was created for a ``TokenLicense``.|
 
+</details>
+
+
+<details>
+<summary>❓ Queries</summary>
 
 |Query Name|Description|
 |--|--|
@@ -65,6 +85,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[GetAllTokenLicenses](../src/Bct.Common.Licensing.Contract/Queries/GetAllTokenLicenses.cs)|Gets all not-deleted ``TokenLicense``.|
 |[GetTokenLicensesByFilter](../src/Bct.Common.Licensing.Contract/Queries/GetTokenLicensesByFilter.cs)|Gets all not-deleted ``TokenLicense`` by specific filters.
 
+</details>
+
+
+<details>
+<summary>➡️ Responses</summary>
 
 |Response Name|Responds to Command|Description|
 |--|--|--|
@@ -73,6 +98,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[AllocateLicenseToDeviceResponse](../src/Bct.Common.Licensing.Contract/Messages/AllocateLicenseToDeviceResponse.cs)|``AllocateLicenseToDevice``|Contains the ID of the created ``DeviceLicenseAllocation`` in the system.|
 |[GetDeviceLicensesResponse](../src/Bct.Common.Licensing.Contract/Messages/GetDeviceLicensesResponse.cs)|``GetDeviceLicenses``|Contains a List of queried device licenses.|
 
+</details>
+
+
+<details>
+<summary>🛎️ Significant Classes</summary>
 
 |Class Name|Class Description|
 |--|--|
@@ -81,15 +111,30 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[**LicenseType**](../src/Bct.Common.Licensing.Contract/Constants/LicenseType.cs)|Enumeration describing the LicenseType of any given license.|
 |[**RestRoutes**](../src/Bct.Common.Licensing.Contract/Constants/RestRoutes.cs)|Constants that define the set of defined licensing service REST routes.|
 
+</details>
+
+
+
 
 
 <!---------------------------------------------------------------------------------
                 Device License Related Functionality
 ----------------------------------------------------------------------------------->
 
+<details>
+<summary>Device Licensing Functionality</summary><blockquote>
 
 
 
+
+<details>
+<summary>Class Overview</summary><blockquote>
+
+
+
+
+<details>
+<summary>Validators</summary>
 
 |Validator Name|Description|
 |--|--|
@@ -103,6 +148,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[DeleteLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/DeleteLicenseValidator.cs)|Used to validate whether the ``DeleteLicense`` command can be executed.|
 |[SetMaximumAllocationsValidator](../src/Bct.Common.Licensing.Business/Validators/DeviceLicenseValidators/SetMaximumAllocationsValidator.cs)|Used to validate whether the ``SetMaximumAllocationsValue`` command can be executed.|
 
+</details>
+
+
+<details>
+<summary>Managers</summary>
 
 |Manager Name|Description|
 |--|--|
@@ -114,6 +164,11 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[GetDeviceLicensesManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/GetDeviceLicensesManager.cs)|Contains the business logic for the ``GetDeviceLicensesByFilterHandler`` and ``GetAllDeviceLicensesHandler`` handlers. 
 |[SetMaximumAllocationsManager](../src/Bct.Common.Licensing.Business/Managers/DeviceLicenseManagers/SetMaximumAllocationsManager.cs)|Contains the business logic for the ``SetMaximumAllocationsValueHandler`` handler.
 
+</details>
+
+
+<details>
+<summary>Handlers</summary>
 
 |Handler Name|Description|
 |--|--|
@@ -125,6 +180,13 @@ The Common Licensing Subsystem exposes its Domain for consumers to use through m
 |[GetAllDeviceLicensesHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/GetAllDeviceLicensesHandler.cs)|Handles the query ``GetAllDeviceLicenses`` in the system.|
 |[GetDeviceLicensesByFilterHandler](../src/Bct.Common.Licensing.Business/Handlers/DeviceLicense/GetDeviceLicensesByFilterHandler.cs)|Handles the query ``GetDeviceLicensesByFilter`` in the system.|
 
+</details>
+
+</blockquote></details>
+
+
+<details>
+<summary>Business Logic Specifications</summary>
 
 <summary style="font-size: 1.1em">Specifications</summary>
 
@@ -350,13 +412,28 @@ Then
 
 ![Logic flow executed by the system for deleting a device license.](./drawio/images/DeleteLicense-Page-1.png)
 
+</details>
+
+</blockquote></details>
+
 <!---------------------------------------------------------------------------------
                 Token License Related Functionality
 ----------------------------------------------------------------------------------->
 
+<details>
+<summary>Token Licensing Functionality</summary><blockquote>
 
 
 
+
+<details>
+<summary>Class Overview</summary><blockquote>
+
+
+
+
+<details>
+<summary>Validators</summary>
 
 <summary>Validators</summary>
 
@@ -367,6 +444,11 @@ Then
 |[ConsumeTokensValidator](../src/Bct.Common.Licensing.Business/Validators/TokenLicenseValidators/ConsumeTokensValidator.cs)|Used to validate whether the ``ConsumeTokens`` command can be executed.|
 |[CreateTokenLicenseValidator](../src/Bct.Common.Licensing.Business/Validators/TokenLicenseValidators/CreateTokenLicenseValidator.cs)|Used to validate whether the ``CreateTokenLicense`` command can be executed.|
 
+</details>
+
+
+<details>
+<summary>Managers</summary>
 
 <summary>Managers</summary>
 
@@ -378,6 +460,11 @@ Then
 |[GetTokenLicenseByIdManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicenseManagers/GetTokenLicenseByIdManager.cs)|Contains the business logic for the ``GetTokenLicenseByIdHandler`` handler.|
 |[GetTokenLicensesManager](../src/Bct.Common.Licensing.Business/Managers/TokenLicenseManagers/GetTokenLicensesManager.cs)|Contains the business logic for the ``GetTokenLicensesByFilterHandler`` and ``GetAllTokenLicensesHandler`` handlers.|
 
+</details>
+
+
+<details>
+<summary>Handlers</summary>
 
 <summary>Handlers</summary>
 
@@ -385,6 +472,13 @@ Then
 |--|--|
 |[CreateTokenLicenseHandler](../src/Bct.Common.Licensing.Business/Handlers/TokenLicense/CreateTokenLicenseHandler.cs)|Handles the command ``CreateTokenLicense`` in the system.|
 
+</details>
+
+</blockquote></details>
+
+
+<details>
+<summary>Business Logic Specifications</summary>
 
 <summary style="font-size: 1.1em">Business Logic Specifications</summary>
 
@@ -595,8 +689,14 @@ Then
 ![Consuming tokens](drawio/images/ConsumeTokensGracePeriod-Page-1.png)
 -->
 
+</details>
+
+</blockquote></details>
+
+
 
 ## Data Access
 
 The BCT Common Licensing Subsystem covers persistence through the ``Bct.Common.Licensing.Infrastructure`` and ``Bct.Common.Licensing.Dto`` projects.
+
 

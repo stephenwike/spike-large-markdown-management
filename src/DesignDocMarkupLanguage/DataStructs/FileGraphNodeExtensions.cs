@@ -5,8 +5,6 @@ namespace DesignDocMarkupLanguage.DataStructs;
 
 public static class FileGraphNodeExtensions
 {
-    
-
     public static void UpdateNode(this FileGraphNode node, Match match, int lineCount)
     {
         var header = match.Groups["Header"].Value ?? throw new Exception("Null Header Group");

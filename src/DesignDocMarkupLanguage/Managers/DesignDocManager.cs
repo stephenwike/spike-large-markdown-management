@@ -35,9 +35,15 @@ public class MarkupManager
         
         // Validate Doc Files
         _dfValidator.Validate(docFiles);
+
+        // Enrich Graph with template
+        _dfParser.Enrich(docFiles, template);
+
+        // Build html tags into the template
+        var enrichedTemplate = _tmpParser.Enrich(template, docFiles);
         
         // Parse Template with DocFiles Graph
-        var document = _tmpParser.Parse(template, docFiles);
+        var document = _tmpParser.Parse(enrichedTemplate, docFiles);
         
         // Write Document
         File.WriteAllText(_output.LocalPath, document);

@@ -19,4 +19,7 @@ public class FileNodeInfo
     public int FileNumber { get; set; }
     public string PageName { get; set; }
     public string Header { get; set; }
+    public bool IsCollapsed { get; set; } = false;
+    public bool IsNesting { get; set; } = false;
+    public bool IsLastNestedElement { get; set; } = false;
 }
