@@ -1,0 +1,1 @@
+Create a markdown file within your project. This markdown file will define the structure of the document. Component documents are included into the fully compiled document using defined markup. The template file is a markdown file and may include all standard markdown and html.

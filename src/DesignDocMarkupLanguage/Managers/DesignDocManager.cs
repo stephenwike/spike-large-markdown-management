@@ -1,4 +1,5 @@
-﻿using DesignDocMarkupLanguage.Parsers;
+﻿using DesignDocMarkupLanguage.CLI;
+using DesignDocMarkupLanguage.Parsers;
 using DesignDocMarkupLanguage.Validators;
 
 namespace DesignDocMarkupLanguage.Managers;
@@ -8,44 +9,39 @@ public class MarkupManager
     private readonly DocFilesValidator _dfValidator;
     private readonly DocFilesParser _dfParser;
     private readonly TemplateValidator _tmpValidator;
-    private readonly TemplateParser _tmpParser;
-    private readonly Uri _templateFile;
-    private readonly Uri _docFilesDir;
-    private readonly Uri _output; // TODO: Should this be a setting?
-    
-    public MarkupManager(Uri templateFile, Uri docFiles, Uri output)
+    private readonly DocumentBuilder _tmpParser;
+
+    public MarkupManager()
     {
-        _templateFile = templateFile;
-        _docFilesDir = docFiles;
-        _output = output;
         _dfValidator = new DocFilesValidator();
         _dfParser = new DocFilesParser();
         _tmpValidator = new TemplateValidator();
-        _tmpParser = new TemplateParser();
+        _tmpParser = new DocumentBuilder();
     }
 
     public void GenerateDocument()
     {
+        var template = File.ReadAllLines(Settings.TemplateUri.LocalPath);
+
         // Validate Template
-        var template = File.ReadAllText(_templateFile.LocalPath);
         _tmpValidator.Validate(template);
         
         // Create DocFiles Graph
-        var docFiles = _dfParser.Parse(_docFilesDir);
+        var docFiles = _dfParser.Parse(Settings.DocFilesURi);
         
         // Validate Doc Files
         _dfValidator.Validate(docFiles);
 
-        // Enrich Graph with template
-        _dfParser.Enrich(docFiles, template);
+        // Update Graph with template
+        _dfParser.UpdateFileGraph(template, docFiles);
 
-        // Build html tags into the template
+        // Build github tags into the template
         var enrichedTemplate = _tmpParser.Enrich(template, docFiles);
         
-        // Parse Template with DocFiles Graph
-        var document = _tmpParser.Parse(enrichedTemplate, docFiles);
+        // Build Template with DocFiles Graph
+        var document = _tmpParser.Build(enrichedTemplate, docFiles);
         
         // Write Document
-        File.WriteAllText(_output.LocalPath, document);
+        File.WriteAllText(Settings.OutputUri.LocalPath, document);
     }
 }

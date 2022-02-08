@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Net.Mime;
 using CommandLine;
 using DesignDocMarkupLanguage.Validators;
 
@@ -7,8 +9,7 @@ public class CliUtils
 {
     public void RunOptions(Options opts)
     {
-        var curDir = Directory.GetCurrentDirectory();
-        Console.WriteLine(curDir);
+        var curDir = opts.RootDir;
         var templatePath = Path.Combine(curDir, opts.TemplateFile);
         var docFilesPath = Path.Combine(curDir, opts.DocsFolder);
         var outputPath = Path.Combine(curDir, opts.Output);
@@ -16,6 +17,7 @@ public class CliUtils
         Settings.TemplateUri = new Uri(templatePath);
         Settings.DocFilesURi = new Uri(docFilesPath);
         Settings.OutputUri = new Uri(outputPath);
+        Settings.RootDir = new Uri(curDir);
 
         Console.WriteLine();
 
@@ -25,8 +27,6 @@ public class CliUtils
 
     public void HandleParseError(IEnumerable<Error> errs)
     {
-        
         Console.WriteLine("{DesignDocMarkupLanguage.CLI} HandleParseError reached but not implemented.");
-        
     }
 }

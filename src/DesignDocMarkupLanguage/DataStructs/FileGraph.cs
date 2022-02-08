@@ -4,7 +4,7 @@ public class FileGraph
 {
     public FileGraph(DirectoryInfo rootDir)
     {
-        Root = new FileGraphNode(rootDir);
+        Root = new FileGraphNode(null, rootDir);
     }
     
     public FileGraphNode Root { get; set; }

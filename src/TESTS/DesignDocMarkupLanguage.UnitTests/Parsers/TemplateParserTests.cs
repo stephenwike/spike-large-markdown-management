@@ -25,11 +25,11 @@ public class TemplateParserTests
         mockHeader1.SetupGet(x => x.Value).Returns(new FileNodeInfo("01 Header"));
         mockRoot.SetupGet(x => x.Children).Returns(new List<FileGraphNode>() {mockHeader1.Object});
         
-        var parser = new TemplateParser();
+        var parser = new DocumentBuilder();
         mockGraph.SetupGet(x => x.Root).Returns(mockRoot.Object);
 
         // Act
-        var result = parser.Parse(validTemplate, mockGraph.Object);
+        var result = parser.Build(validTemplate, mockGraph.Object);
         
         // Assert
         result.Should().NotBeNull();
@@ -40,10 +40,10 @@ public class TemplateParserTests
     public void Validate_GivenInvalidTags_ShouldGiveReturnNull(string invalidTemplate)
     {
         // Arrange
-        var parser = new TemplateParser();
+        var parser = new DocumentBuilder();
 
         // Act
-        var result = parser.Parse(invalidTemplate, new FileGraph(new DirectoryInfo("")));
+        var result = parser.Build(invalidTemplate, new FileGraph(new DirectoryInfo("")));
         
         // Assert
         result.Should().BeNull();

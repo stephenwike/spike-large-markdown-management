@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using DesignDocMarkupLanguage.Constants;
 using DesignDocMarkupLanguage.DataStructs;
+using DesignDocMarkupLanguage.Helpers;
 
 namespace DesignDocMarkupLanguage.Parsers;
 
@@ -15,18 +16,16 @@ public class DocFilesParser
         return graph;
     }
     
-    private static void ParseNodesRecursive(FileGraphNode node)
+    private static void ParseNodesRecursive(FileGraphNode parentNode)
     {
-        if (node?.Directory == null) return;
+        if (parentNode?.Directory == null) return;
         
         // For a single node, get all subNodes
-        var dirs = node.Directory.GetDirectories()
-            .Where(x => new Regex(Patterns.DocumentFilesPattern).IsMatch(x.Name))
-            .Select(x => new FileGraphNode(node, x)).OrderBy(x => x.Value.FileNumber).ToList();
-        var files = node.Directory.GetFiles()
-            .Where(x => new Regex(Patterns.DocumentFilesPattern).IsMatch(x.Name))
-            .Select(x => new FileGraphNode(node, x)).ToList();
-        node.Children = dirs.Union(files).OrderBy(x => x.Value.FileNumber).ToList();
+        var dirs = parentNode.Directory.GetDirectories()
+            .Select(x => new FileGraphNode(parentNode, x)).ToList();
+        var files = parentNode.Directory.GetFiles()
+            .Select(x => new FileGraphNode(parentNode, x)).ToList();
+        parentNode.Children = dirs.Concat(files).ToDictionary(node => node.Value.PageName, node => node);
 
         foreach (var dir in dirs)
         {
@@ -34,47 +33,37 @@ public class DocFilesParser
         }
     }
 
-    public void Enrich(FileGraph fileGraph, string template)
+    public void UpdateFileGraph(string[] template, FileGraph fileGraph)
     {
         // Flag all non-regular markup
-        var activeFileNode = fileGraph.Root.Next();
-        using (var reader = new StringReader(template))
+        var contextNode = fileGraph.Root;
+        for (var index = 0; index < template.Length; ++index)
         {
-            string? line = string.Empty;
-            while((line = reader.ReadLine()) != null)
+            var match = new Regex(Patterns.TemplatePattern).Match(template[index]);
+            if (match.Success && !string.IsNullOrWhiteSpace(match.Groups["Label"].Value))
             {
-                var matches = new Regex(Patterns.ReservedMarkup).Matches(line);
-                if (matches.Count == 2)
+                if (match.Groups["Open"].Value == ReservedMarkup.FileOpen)
                 {
-                    if (matches[0].Value == ReservedMarkup.CollapseOpen)
-                    {
-                        // Update docFiles with IsCollapsed flag.
-                        activeFileNode.Value.IsCollapsed = true;
-                    }
-                    activeFileNode = activeFileNode.Next();
+                    // Update docFiles with IsFileReference flag.
+                    contextNode.Value.IsFileReference = true;
+                    continue;
                 }
-            }
-        }
-        
-        // Flag all nesting markup
-        activeFileNode = fileGraph.Root.Next();
-        while (activeFileNode != null)
-        {
-            // If nested collapse tags.
-            if (activeFileNode.Value.IsCollapsed &&
-                activeFileNode?.Parent != null &&
-                activeFileNode.Parent.Value.IsCollapsed)
-            {
-                activeFileNode.Parent.Value.IsNesting = true;
                 
-                // If last element in nested collapse tags.
-                if (activeFileNode.Parent.Children.Count() == activeFileNode.Value.FileNumber)
+                var depth = TemplateHelper.GetDepth(match.Groups["Tabs"].Value);
+                contextNode = contextNode.GetContext(match.Groups["Label"].Value, depth);
+                
+                if (match.Groups["Open"].Value == ReservedMarkup.CollapseOpen)
                 {
-                    activeFileNode.Value.IsLastNestedElement = true;
+                    // Update docFiles with IsCollapsed flag.
+                    contextNode.Value.IsCollapsed = true;
+
+                    // Determine if nested.
+                    if (contextNode.Value.IsCollapsed && contextNode?.Parent != null && contextNode.Parent.Value.IsCollapsed)
+                    {
+                        contextNode.Parent.Value.IsNesting = true;
+                    }
                 }
             }
-            
-            activeFileNode = activeFileNode.Next();
         }
     }
 }

@@ -20,6 +20,11 @@ public class Options
         HelpText = "The file path and file name of the compiled design document.")]
     public string Output { get; set; }
     
+    [Option('r', "root", 
+        Required = true, 
+        HelpText = "The file path where the script is being run.")]
+    public string RootDir { get; set; }
+    
     [Option('i', "indenttype", 
         Required = false, 
         Default = IndentTypes.FourSpaces, 

@@ -7,16 +7,30 @@ public static class FileGraphNodeExtensions
 {
     public static void AddLines(this StringBuilder builder, FileGraphNode? node)
     {
-        if (node == null) throw new Exception($"Node cannot be null.");
+        if (node == null) throw new Exception(@"Node cannot be null.");
         
-        var lines = new List<string>();
         if (!string.IsNullOrWhiteSpace(node.File?.FullName))
+        {
+            var lines = new List<string>();
             lines.AddRange(File.ReadAllLines(node.File.FullName));
-        
-        builder.AppendLine(); // Add Newline
-        // TODO: Add Collapse and QuoteBlockLogic
-        lines.ForEach(x => builder.AppendLine(x));
-        // TODO: Add Collapse and QuoteBlockLogic
-        builder.AppendLine(); // Add Newline
+            lines.ForEach(x => builder.AddLine(x));
+        }
+        else
+        {
+            var hashes = new string(Enumerable.Repeat('#', node.Depth()).ToArray());
+            builder.AddLine($"{hashes} {node.Value.Summary}");
+        }
+    }
+
+    public static void AddLine(this StringBuilder builder, string line)
+    {
+        if (!string.IsNullOrWhiteSpace(line))
+        {
+            builder.AppendLine(line);
+        }
+        else if (builder.Length != 0)
+        {
+            builder.AppendLine(line);
+        }
     }
 }
