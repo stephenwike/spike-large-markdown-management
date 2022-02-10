@@ -1,18 +1,21 @@
 ﻿using System.Text.RegularExpressions;
-using DesignDocMarkupLanguage.CLI;
 using DesignDocMarkupLanguage.Constants;
+using DesignDocMarkupLanguage.DataStructs;
+using DesignDocMarkupLanguage.Helpers;
 
 namespace DesignDocMarkupLanguage.Validators;
 
-public class TemplateValidator
+public class TemplateFormatValidator
 {
-    public void Validate(string[] template)
+    public TemplateQueue Validate(string[] template)
     {
+        var queue = new TemplateQueue();
         var regex = new Regex(Patterns.TemplatePattern);
         for(var index = 0; index < template.Length; ++index)
         {
             var match = regex.Match(template[index]);
             if (!match.Success) continue;
+            queue.AddStep(RegexMapHelper.MapTemplateStep(match, index));
             if (!IsOpeningTag(match.Groups["Open"].Value))
                 throw new Exception($"Template Error (#{index}). Expected opening tag but got {match.Groups["Open"].Value}.");
             if (!IsClosingTag(match.Groups["Close"].Value))
@@ -20,6 +23,8 @@ public class TemplateValidator
             if (!IsTagMatched(match.Groups["Open"].Value, match.Groups["Close"].Value))
                 throw new Exception($"Template Error (#{index}). Opening tag {match.Groups["Open"].Value} has to be paired with correct closing tag, but got {match.Groups["Close"].Value}.");
         }
+
+        return queue;
     }
 
     private static bool IsOpeningTag(string source)

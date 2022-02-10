@@ -33,7 +33,7 @@ public class DocFilesParser
         }
     }
 
-    public void UpdateFileGraph(string[] template, FileGraph fileGraph)
+    public void UpdateFileGraph(string[] template, FileGraph fileGraph) // TODO: Is this still needed?
     {
         // Flag all non-regular markup
         var contextNode = fileGraph.Root;
@@ -50,7 +50,9 @@ public class DocFilesParser
                 }
                 
                 var depth = TemplateHelper.GetDepth(match.Groups["Tabs"].Value);
-                contextNode = contextNode.GetContext(match.Groups["Label"].Value, depth);
+                contextNode = contextNode.Find(match.Groups["Label"].Value, depth);
+                if (contextNode == null)
+                    throw new IndexOutOfRangeException("Found tag that exceeded the last file/folder in the file docs directory.");
                 
                 if (match.Groups["Open"].Value == ReservedMarkup.CollapseOpen)
                 {

@@ -10,153 +10,136 @@ namespace DesignDocMarkupLanguage.Parsers;
 
 public class DocumentBuilder
 {
-    public string Build(string[] template, FileGraph fileGraph)
+    public string Build(string[] template)
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        var contextNode = fileGraph.Root;
-        for (var index = 0; index < template.Length; ++index)
+        var stringBuilder = new StringBuilder();
+
+        var prevLineIsEmpty = false;
+        foreach (var line in template)
         {
-            var line = template[index];
-            Regex regex = new Regex(Patterns.TemplatePattern);
-            var match = regex.Match(line);
-            if (match.Success)
-            {
-                if (match.Groups["Open"].Value == ReservedMarkup.FileOpen)
-                {
-                    // Get File Contents
-                    var fileMatch = new Regex(Patterns.FileTagPattern).Match(match.Groups["Label"].Value);
-                    var start = 0;
-                    var length = -1;
-                    var lineOptions = fileMatch.Groups["Lines"].Value;
-                    if (!string.IsNullOrWhiteSpace(lineOptions!))
-                    {
-                        var options = lineOptions.Split(',');
-                        start = int.Parse(options[0]) - 1; // Inclusive
-                        if (options.Length == 2)
-                        {
-                            length = int.Parse(options[1]) - start;
-                        }
-                    }
+            if (prevLineIsEmpty && string.IsNullOrWhiteSpace(line)) continue;
+            prevLineIsEmpty = string.IsNullOrWhiteSpace(line);
 
-                    var filePath = Path.GetFullPath(Path.Combine(Settings.RootDir.LocalPath, fileMatch.Groups["FilePath"].Value));
-                    if (File.Exists(filePath))
-                    {
-                        var lines = File.ReadAllLines(filePath).Skip(start);
-                        if (length >= 0) { lines = lines.Take(length); }
-
-                        stringBuilder.AppendLine(@"```csharp");
-                        lines.ToList().ForEach(x => stringBuilder.AppendLine(x));
-                        stringBuilder.AppendLine(@"```");
-                    }
-                }
-                else
-                {
-                    var depth = TemplateHelper.GetDepth(match.Groups["Tabs"].Value);
-                    var value = match.Groups["Label"].Value;
-                    contextNode = contextNode.GetContext(value, depth);
-                    if (contextNode == null)
-                    {
-                        throw new Exception($"Template Helper Error: Label {value} was not found at depth {depth}.");
-                    }
-                    stringBuilder.AddLines(contextNode);
-                }
-            }
-            else
-            {
-                stringBuilder.AddLine(line);
-            }
+            stringBuilder.AppendLine(line);
         }
-
+        
         return stringBuilder.ToString();
     }
 
-    public string[] Enrich(string[] template, FileGraph fileGraph)
+    public string[] Parse(string[] template, TemplateQueue templateQueue)
     {
-        var contextNode = fileGraph.Root;
-        var closingNested = false;
-        FileGraphNode? nodeNested = null;
-        List<string> outLines = new List<string>();
+        var queue = templateQueue.Queue;
+        var nextStep = queue.Dequeue();
+        var document = new List<string>();
         for (var index = 0; index < template.Length; ++index)
         {
-            var line = template[index];
-            var match = new Regex(Patterns.TemplatePattern).Match(line);
-            if (match.Success && match.Groups["Open"].Value != ReservedMarkup.FileOpen)
+            if (nextStep.Line == index)
             {
-                var depth = TemplateHelper.GetDepth(match.Groups["Tabs"].Value);
-                contextNode = contextNode.GetContext(match.Groups["Label"].Value, depth);
-                if (contextNode == null) 
-                    throw new IndexOutOfRangeException("Found tag that exceeded the last file/folder in the file docs directory.");
-                
-                // Close any currently running nested tags if depth is returned to starting node.
-                if (closingNested && nodeNested?.Depth() == contextNode?.Depth())
+                while (nextStep.Line == index)
                 {
-                    CloseNested(outLines);
-                    closingNested = false;
-                }
+                    var content = StepContent(nextStep);
+                    document.AddRange(content);
 
-                if (contextNode != null && contextNode.Value.IsNesting)
-                {
-                    var id = TemplateHelper.GetNestedId(contextNode);
-                    OpenNested(outLines, id, contextNode.Value.Summary ?? "", line);
-                    closingNested = true;
-                    nodeNested = contextNode;
+                    if (!queue.Any()) break;
+                    nextStep = queue.Dequeue();
                 }
-                else if (contextNode != null && contextNode.Value.IsCollapsed)
-                {
-                    var id = TemplateHelper.GetId(contextNode);
-                    Collapse(outLines, id, contextNode.Value.Summary ?? "", line);
-                }
-                else
-                {
-                    outLines.Add(line);
-                }
-            }
-            else if (closingNested && !string.IsNullOrWhiteSpace(line))
-            {
-                CloseNested(outLines);
-                closingNested = false;
-                outLines.Add(line);
             }
             else
             {
-                outLines.Add(line);
+                document.Add(template[index]);
             }
         }
 
-        if (closingNested)
+        return document.ToArray();
+    }
+
+    private List<string> StepContent(TemplateStep nextStep)
+    {
+        switch (nextStep.Action)
         {
-            CloseNested(outLines);
-            closingNested = false;
+            case TemplateAction.Regular: return RegularStep(nextStep);
+            case TemplateAction.Collapse: return CollapseStep(nextStep);
+            case TemplateAction.FileRef: return FileRefStep(nextStep);
+            case TemplateAction.NestOpen: return NestOpenStep(nextStep);
+            case TemplateAction.NestClose: return NestCloseStep(nextStep);
+            default:
+                throw new Exception(
+                    $"System exception. Unexpected TemplateAction {nextStep.Action} received in method DocumentBuilder.SetContent.");
+        }
+    }
+
+    private List<string> RegularStep(TemplateStep nextStep)
+    {
+        var content = new List<string>();
+        
+        var hashes = new string(Enumerable.Repeat('#', nextStep.Depth).ToArray());
+        content.Add($"{hashes} {nextStep.Summary}");
+        content.Add(string.Empty);
+
+        if (nextStep.HasContent)
+        {
+            content.AddRange(File.ReadAllLines(nextStep.Path));
+            content.Add(string.Empty);
+        }
+
+        return content;
+    }
+    
+    private List<string> CollapseStep(TemplateStep nextStep)
+    {
+        var content = new List<string>();
+        
+        var filePath = Path.GetFullPath(Path.Combine(Settings.RootDir.LocalPath, nextStep.Path));
+        if (nextStep.HasContent)
+        {
+            content.Add($"<details id=\"{nextStep.Id}\">");
+            content.Add($"<summary>{nextStep.Summary}</summary>");
+            content.Add(string.Empty);
+            content.AddRange(File.ReadAllLines(filePath));
+            content.Add(string.Empty);
+            content.Add(@"</details>");
+            content.Add(string.Empty);
+        }
+
+        return content;
+    }
+    
+    private List<string> FileRefStep(TemplateStep nextStep)
+    {
+        if (nextStep.FileRef == null) throw new SystemException();
+        
+        var content = new List<string>();
+        
+        var filePath = Path.GetFullPath(Path.Combine(Settings.RootDir.LocalPath, nextStep.Path));
+        if (File.Exists(filePath))
+        {
+            var lines = File.ReadAllLines(filePath).Skip(nextStep.FileRef.Start);
+            if (nextStep.FileRef.Length >= 0) { lines = lines.Take(nextStep.FileRef.Length); }
+
+            content.Add(@"```csharp"); // TODO:  Should be dynamic based on extension.
+            content.AddRange(lines);
+            content.Add(@"```");
         }
         
-        return outLines.ToArray();
+        return content;
     }
-
-    private void Collapse(List<string> outLines, string id, string summary, string line)
+    
+    private List<string> NestOpenStep(TemplateStep nextStep)
     {
-        outLines.Add($"<details id=\"{id}\">");
-        outLines.Add($"<summary>{summary}</summary>");
-        outLines.Add(Environment.NewLine);
-        outLines.Add(line);
-        outLines.Add(Environment.NewLine);
-        outLines.Add(@"</details>");
-        outLines.Add(Environment.NewLine);
+        var content = new List<string>();
+        content.Add($"<details id=\"{nextStep.Id}\">");
+        content.Add($"<summary>{nextStep.Summary}</summary>");
+        content.Add("<blockquote>");
+        content.Add(string.Empty);
+        return content;
     }
-
-    private void OpenNested(List<string> outLines, string id, string summary, string line)
+    
+    private List<string> NestCloseStep(TemplateStep nextStep)
     {
-        outLines.Add($"<details id=\"{id}\">");
-        outLines.Add($"<summary>{summary}</summary>");
-        outLines.Add("<blockquote>");
-        outLines.Add(Environment.NewLine);
-        outLines.Add(line);
-        outLines.Add(Environment.NewLine);
-    }
-
-    private void CloseNested(List<string> outLines)
-    {
-        outLines.Add("</blockquote>");
-        outLines.Add(@"</details>");
-        outLines.Add(Environment.NewLine);
+        var content = new List<string>();
+        content.Add("</blockquote>");
+        content.Add(@"</details>");
+        content.Add(string.Empty);
+        return content;
     }
 }

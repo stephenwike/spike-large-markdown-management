@@ -1,8 +1,4 @@
-﻿using DesignDocMarkupLanguage.CLI;
-using DesignDocMarkupLanguage.Constants;
-using DesignDocMarkupLanguage.Helpers;
-
-namespace DesignDocMarkupLanguage.DataStructs;
+﻿namespace DesignDocMarkupLanguage.DataStructs;
 
 public class FileGraphNode
 {
@@ -17,7 +13,7 @@ public class FileGraphNode
     public DirectoryInfo? Directory { get; set; }
     public FileInfo? File { get; set; }
 
-    public int Depth() // TODO: Might not need.
+    public int Depth()
     {
         var depth = 0;
         var node = this.Parent;
@@ -29,13 +25,13 @@ public class FileGraphNode
         return depth;
     }
 
-    public FileGraphNode? GetContext(string value, int depth)
+    public FileGraphNode? Find(string value, int depth)
     {        
         var thisDepth = Depth();
 
-        // If higher, get parent. 
+        // If higher, find in parent. 
         if (depth < thisDepth && Parent != null)
-            return Parent.GetContext(value, depth);
+            return Parent.Find(value, depth);
         
         // If lower, get child.
         if (depth > thisDepth && Children != null && Children.ContainsKey(value))

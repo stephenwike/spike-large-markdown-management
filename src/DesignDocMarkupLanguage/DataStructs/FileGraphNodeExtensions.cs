@@ -5,7 +5,7 @@ namespace DesignDocMarkupLanguage.DataStructs;
 
 public static class FileGraphNodeExtensions
 {
-    public static void UpdateNode(this FileGraphNode node, Match match, int lineCount)
+    public static void UpdateNode(this FileGraphNode node, Match match, int lineCount) // TODO: Is this used outside of tests?
     {
         var header = match.Groups["Header"].Value ?? throw new Exception("Null Header Group");
         var page = match.Groups["Page"].Value ?? throw new Exception("Null Page Group");

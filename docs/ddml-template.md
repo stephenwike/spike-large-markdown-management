@@ -13,20 +13,22 @@ This markup language is designed to templatize markdown files commonly used in r
     ::Reserved Markup::
         ::Reserved Markup::
 
-    ::Building and Running::
-        [:Nuget:]
-            [:Building:]
-            [:Running:]
-        [:GitHub:]
-            [:Building:]
-            [:Running:]
+    ::How To Use::
+        [:Linting:]
+        [:Building and Running:]
+            [:Nuget:]
+                [:Building:]
+                [:Running:]
+            [:GitHub:]
+                [:Building:]
+                [:Running:]
+        [:Pipeline Integration:]
+            ::GitHub Actions::
 
-## Showing Example Code
+    ::Showing Example Code::
 
 You can include example code by providing the source filepath and optionally specifying which lines to display.
 
-### Regex Patterns Used
+        ::Regex Patterns Used::
 
-Here are the regex patterns used for determining markup compatibility.
-
-!:3,42:./src/DesignDocMarkupLanguage/Constants/Patterns.cs:!
+!:3,35:./src/DesignDocMarkupLanguage/Constants/Patterns.cs:!

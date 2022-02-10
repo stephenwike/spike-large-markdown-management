@@ -13,7 +13,7 @@ public class TemplateValidatorTests
     public void Validate_ValidTemplate_ShouldNotThrowException(string template)
     {
         // Arrange
-        var validator = new TemplateValidator();
+        var validator = new TemplateFormatValidator();
         
         // Act
         var act = () => validator.Validate(template);
@@ -27,7 +27,7 @@ public class TemplateValidatorTests
     public void Validate_InvalidTemplate_ShouldThrowException(string template)
     {
         // Arrange
-        var validator = new TemplateValidator();
+        var validator = new TemplateFormatValidator();
         
         // Act
         var act = () => validator.Validate(template);

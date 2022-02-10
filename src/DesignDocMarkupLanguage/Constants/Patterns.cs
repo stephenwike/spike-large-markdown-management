@@ -4,14 +4,6 @@ public static class Patterns
 {
     public static readonly string TemplatePattern = TemplatePatterns.Pattern;
     public static readonly string DocumentFilesPattern = DocFilesPatterns.Pattern;
-    public static readonly string FileTagPattern = FileTagPatterns.Pattern;
-}
-
-public static class FileTagPatterns
-{
-    private static readonly string LINES = @"(?<Lines>[0-9]*,? ?[0-9]*)";
-    private static readonly string PATH = @"(?<FilePath>.+)";
-    public static readonly string Pattern = $"^{LINES}:?{PATH}";
 }
 
 public static class TemplatePatterns
@@ -20,9 +12,10 @@ public static class TemplatePatterns
     private static readonly string CloseMarkup = @":[\]!:]";
     private static readonly string OPEN = $"(?<Open>{OpenMarkup})";
     private static readonly string CLOSE = $"(?<Close>{CloseMarkup})";
+    private static readonly string LINES = @"(?<Lines>[0-9]*,? ?[0-9]*)";
     private static readonly string LABEL = $"(?<Label>.+)";
     private static readonly string TABS = @"(?<Tabs>[\t\s]*)";
-    private static readonly string HEADER = $"(?<Header>{OPEN}{LABEL}{CLOSE})";
+    private static readonly string HEADER = $"(?<Header>{OPEN}{LINES}:?{LABEL}{CLOSE})";
     public static readonly string Pattern = $"^{TABS}{HEADER}";
 }
 

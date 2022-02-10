@@ -15,6 +15,8 @@ This markup language is designed to templatize markdown files commonly used in r
 
     ::Reserved Markup::
 
+    ::Integrations
+
     ::Building and Running::
         [:Nuget:]
             [:Building:]

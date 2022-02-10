@@ -28,6 +28,13 @@ public static class TemplateHelper
         return contextNode.Value.PageName.ToLower().Replace(' ', '-');
     }
     
+    public static string GetId(string label)
+    {
+        if (string.IsNullOrWhiteSpace(label)) return "id";
+
+        return label.ToLower().Replace(' ', '-');
+    }
+    
     public static string GetNestedId(FileGraphNode? contextNode)
     {
         if (contextNode?.Parent == null) return "id";
@@ -36,5 +43,16 @@ public static class TemplateHelper
         var id = contextNode.Value.PageName.ToLower();
 
         return $"{parentId}-{id}".Replace(' ', '-');
+    }
+
+    public static TemplateAction GetStepType(string value)
+    {
+        switch (value)
+        {
+            case ReservedMarkup.CollapseOpen: return TemplateAction.Collapse;
+            case ReservedMarkup.RegularOpen: return TemplateAction.Regular;
+            case ReservedMarkup.FileOpen: return TemplateAction.FileRef;
+            default: throw new Exception($"TemplateHelper.GetStepType did not recognize opening tag {value}.");
+        }
     }
 }

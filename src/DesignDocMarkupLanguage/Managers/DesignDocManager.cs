@@ -6,42 +6,39 @@ namespace DesignDocMarkupLanguage.Managers;
 
 public class MarkupManager
 {
-    private readonly DocFilesValidator _dfValidator;
     private readonly DocFilesParser _dfParser;
-    private readonly TemplateValidator _tmpValidator;
-    private readonly DocumentBuilder _tmpParser;
+    private readonly TemplateFormatValidator _tmpFormatValidator;
+    private readonly TemplateContentValidator _tmpContentValidator;
+    private readonly DocumentBuilder _docBuilder;
 
     public MarkupManager()
     {
-        _dfValidator = new DocFilesValidator();
         _dfParser = new DocFilesParser();
-        _tmpValidator = new TemplateValidator();
-        _tmpParser = new DocumentBuilder();
+        _tmpFormatValidator = new TemplateFormatValidator();
+        _tmpContentValidator = new TemplateContentValidator();
+        _docBuilder = new DocumentBuilder();
     }
 
     public void GenerateDocument()
     {
         var template = File.ReadAllLines(Settings.TemplateUri.LocalPath);
-
-        // Validate Template
-        _tmpValidator.Validate(template);
+        if (!template.Any()) throw new Exception($"Provided template file is empty at {Settings.TemplateUri.LocalPath}.");
         
-        // Create DocFiles Graph
+        // Validate template and get template queue.
+        var templateQueue = _tmpFormatValidator.Validate(template);
+        
+        // Create DocFiles graph.
         var docFiles = _dfParser.Parse(Settings.DocFilesURi);
-        
-        // Validate Doc Files
-        _dfValidator.Validate(docFiles);
+        if (docFiles?.Root?.Children == null) throw new Exception($"Provided documents folder is empty at {Settings.DocFilesURi.LocalPath}.");
 
-        // Update Graph with template
-        _dfParser.UpdateFileGraph(template, docFiles);
+        // Validate template and update with DocFiles graph
+        _tmpContentValidator.ValidateAndUpdate(templateQueue, docFiles);
 
-        // Build github tags into the template
-        var enrichedTemplate = _tmpParser.Enrich(template, docFiles);
+        // Build the document
+        var documentStrings = _docBuilder.Parse(template, templateQueue);
+        var document = _docBuilder.Build(documentStrings);
         
-        // Build Template with DocFiles Graph
-        var document = _tmpParser.Build(enrichedTemplate, docFiles);
-        
-        // Write Document
+        // Write document
         File.WriteAllText(Settings.OutputUri.LocalPath, document);
     }
 }
