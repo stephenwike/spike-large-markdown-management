@@ -51,7 +51,6 @@ public static class TemplateHelper
         {
             case ReservedMarkup.CollapseOpen: return TemplateAction.Collapse;
             case ReservedMarkup.RegularOpen: return TemplateAction.Regular;
-            case ReservedMarkup.FileOpen: return TemplateAction.FileRef;
             default: throw new Exception($"TemplateHelper.GetStepType did not recognize opening tag {value}.");
         }
     }

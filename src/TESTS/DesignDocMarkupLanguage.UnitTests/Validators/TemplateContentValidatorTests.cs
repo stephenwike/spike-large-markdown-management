@@ -9,17 +9,17 @@ using Xunit;
 
 namespace DesignDocMarkupLanguage.UnitTests.Validators;
 
-public class DocFilesValidatorTests
+public class TemplateContentValidatorTests
 {
     [Fact]
     public void Validate_ValidFiles_ShouldGiveReturnTrue()
     {
         // Arrange
         var graph = new FileGraphGenerator().GenerateFileGraph("ValidTestFiles");
-        var validator = new DocFilesValidator();
+        var validator = new TemplateContentValidator();
 
         // Act
-        var act = () => validator.Validate(graph);
+        var act = () => validator.ValidateAndUpdate(graph);
         
         // Assert
         act.Should().NotThrow();

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace DesignDocMarkupLanguage.UnitTests.Validators;
 
-public class TemplateValidatorTests
+public class TemplateFormatValidatorTests
 {
     [Theory]
     [ClassData(typeof(TemplateValidTestData))]

@@ -32,7 +32,7 @@ public class TemplateQueue
     private Queue<TemplateStep> CompileActions()
     {
         _queue = new Queue<TemplateStep>();
-        TemplateStep prevStep = null;
+        TemplateStep? prevStep = null;
         var nestStack = new Stack<NestCloseInfo>();
         foreach (var step in _steps)
         {
@@ -44,7 +44,7 @@ public class TemplateQueue
                 {
                     Action = TemplateAction.NestOpen,
                     Depth = prevStep.Depth,
-                    Line = prevStep.Line,
+                    Index = prevStep.Index,
                     Summary = prevStep.Summary,
                     Id = prevStep.Id
                 };
@@ -70,7 +70,7 @@ public class TemplateQueue
                         Action = TemplateAction.NestClose,
                         Depth = step.Depth,
                         Id = step.Id,
-                        Line = step.Line
+                        Index = step.Index
                     });
                     
                 }

@@ -1,4 +1,5 @@
 ﻿using DesignDocMarkupLanguage.CLI;
+using DesignDocMarkupLanguage.Helpers;
 using DesignDocMarkupLanguage.Parsers;
 using DesignDocMarkupLanguage.Validators;
 
@@ -21,13 +22,15 @@ public class MarkupManager
 
     public void GenerateDocument()
     {
-        var template = File.ReadAllLines(Settings.TemplateUri.LocalPath);
+        if (Settings.TemplateUri?.LocalPath == null) throw new SystemException("Template Uri should not be null, failed to catch error in validator.");
+        var template = ContentHelper.GetContent(Settings.TemplateUri.LocalPath);
         if (!template.Any()) throw new Exception($"Provided template file is empty at {Settings.TemplateUri.LocalPath}.");
         
         // Validate template and get template queue.
         var templateQueue = _tmpFormatValidator.Validate(template);
         
         // Create DocFiles graph.
+        if (Settings.DocFilesURi == null) throw new SystemException("DocFiles Uri should not be null, failed to catch error in validator.");
         var docFiles = _dfParser.Parse(Settings.DocFilesURi);
         if (docFiles?.Root?.Children == null) throw new Exception($"Provided documents folder is empty at {Settings.DocFilesURi.LocalPath}.");
 
@@ -39,6 +42,7 @@ public class MarkupManager
         var document = _docBuilder.Build(documentStrings);
         
         // Write document
+        if (Settings.OutputUri?.LocalPath == null) throw new SystemException("Output Uri should not be null, failed to catch error in validator.");
         File.WriteAllText(Settings.OutputUri.LocalPath, document);
     }
 }

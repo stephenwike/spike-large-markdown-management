@@ -4,8 +4,6 @@ public enum TemplateAction
 {
     Regular,
     Collapse,
-    FileRef,
     NestOpen,
-    NestClose,
-    None
+    NestClose
 }

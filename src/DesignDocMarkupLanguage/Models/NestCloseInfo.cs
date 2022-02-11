@@ -2,5 +2,5 @@
 
 public class NestCloseInfo
 {
-    public string NestedId { get; set; }
+    public string NestedId { get; init; } = string.Empty;
 }

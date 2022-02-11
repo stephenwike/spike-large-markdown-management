@@ -9,10 +9,9 @@ using Xunit;
 
 namespace DesignDocMarkupLanguage.UnitTests.Validators;
 
-public class TemplateParserTests
+public class DocumentBuilderTests
 {
-    private Mock<FileGraph> mockGraph = new Mock<FileGraph>();
-    
+    private readonly Mock<FileGraph> _mockGraph = new Mock<FileGraph>();
     
     [Theory]
     [ClassData(typeof(TemplateValidTestData))]
@@ -26,10 +25,10 @@ public class TemplateParserTests
         mockRoot.SetupGet(x => x.Children).Returns(new List<FileGraphNode>() {mockHeader1.Object});
         
         var parser = new DocumentBuilder();
-        mockGraph.SetupGet(x => x.Root).Returns(mockRoot.Object);
+        _mockGraph.SetupGet(x => x.Root).Returns(mockRoot.Object);
 
         // Act
-        var result = parser.Build(validTemplate, mockGraph.Object);
+        var result = parser.Build(validTemplate, _mockGraph.Object);
         
         // Assert
         result.Should().NotBeNull();

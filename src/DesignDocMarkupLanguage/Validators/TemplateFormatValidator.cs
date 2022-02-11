@@ -30,15 +30,13 @@ public class TemplateFormatValidator
     private static bool IsOpeningTag(string source)
     {
         return (source == ReservedMarkup.RegularOpen ||
-                source == ReservedMarkup.CollapseOpen ||
-                source == ReservedMarkup.FileOpen);
+                source == ReservedMarkup.CollapseOpen);
     }
     
     private static bool IsClosingTag(string source)
     {
         return (source == ReservedMarkup.RegularClosed ||
-                source == ReservedMarkup.CollapseClosed ||
-                source == ReservedMarkup.FileClosed);
+                source == ReservedMarkup.CollapseClosed);
     }
     
     private static bool IsTagMatched(string source, string target)
@@ -52,10 +50,6 @@ public class TemplateFormatValidator
             case ReservedMarkup.CollapseOpen:
             {
                 return (target == ReservedMarkup.CollapseClosed);
-            }
-            case ReservedMarkup.FileOpen:
-            {
-                return (target == ReservedMarkup.FileClosed);
             }
             default:
             {

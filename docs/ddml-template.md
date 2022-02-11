@@ -31,4 +31,8 @@ You can include example code by providing the source filepath and optionally spe
 
         ::Regex Patterns Used::
 
-!:3,35:./src/DesignDocMarkupLanguage/Constants/Patterns.cs:!
+### Design Doc Manager
+
+This is and example of code file reference posted directly to the template body
+
+!:25,46:./src/DesignDocMarkupLanguage/Managers/DesignDocManager.cs:!
