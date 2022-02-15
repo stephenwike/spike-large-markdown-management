@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using DesignDocMarkupLanguage.DataStructs;
 using DesignDocMarkupLanguage.TestManagement.Generators;
 using DesignDocMarkupLanguage.Validators;
@@ -19,7 +18,7 @@ public class TemplateContentValidatorTests
         var validator = new TemplateContentValidator();
 
         // Act
-        var act = () => validator.ValidateAndUpdate(graph);
+        var act = () => validator.ValidateAndUpdate(new TemplateQueue(), new FileGraph(new DirectoryInfo("")));
         
         // Assert
         act.Should().NotThrow();
@@ -30,10 +29,10 @@ public class TemplateContentValidatorTests
     {
         // Arrange
         var graph = new FileGraph(new DirectoryInfo("N/A"));
-        var validator = new DocFilesValidator();
+        var validator = new TemplateContentValidator();
         
         // Act
-        var act = () => validator.Validate(graph);
+        var act = () => validator.ValidateAndUpdate(new TemplateQueue(), new FileGraph(new DirectoryInfo("")));
         
         // Assert
         act.Should().Throw<Exception>();
@@ -44,10 +43,10 @@ public class TemplateContentValidatorTests
     {
         // Arrange
         var graph = new FileGraphGenerator().GenerateFileGraph("MissingDirNumber");
-        var validator = new DocFilesValidator();
+        var validator = new TemplateContentValidator();
         
         // Act
-        var act = () => validator.Validate(graph);
+        var act = () => validator.ValidateAndUpdate(new TemplateQueue(), new FileGraph(new DirectoryInfo("")));
         
         // Assert
         graph.Root.Value.FullName.Should().Be("01 MissingDirNumber");
@@ -59,10 +58,10 @@ public class TemplateContentValidatorTests
     {
         // Arrange
         var graph = new FileGraphGenerator().GenerateFileGraph("MissingFileNumber");
-        var validator = new DocFilesValidator();
+        var validator = new TemplateContentValidator();
         
         // Act
-        var act = () => validator.Validate(graph);
+        var act = () => validator.ValidateAndUpdate(new TemplateQueue(), new FileGraph(new DirectoryInfo("")));
         
         // Assert
         graph.Root.Value.FullName.Should().Be("01 MissingFileNumber");
@@ -74,14 +73,11 @@ public class TemplateContentValidatorTests
     {
         // Arrange
         var graph = new FileGraphGenerator().GenerateFileGraph("MissingFileNumberOnChild");
-        var validator = new DocFilesValidator();
+        var validator = new TemplateContentValidator();
         
         // Act
-        var act = () => validator.Validate(graph);
+        var act = () => validator.ValidateAndUpdate(new TemplateQueue(), new FileGraph(new DirectoryInfo("")));
         
         // Assert
-        graph.Root.Value.FullName.Should().Be("01 MissingFileNumberOnChild");
-        graph.Root.Children.First().Value.FullName.Should().Be("01 Header1");
-        graph.Root.Children.First().Children.Should().BeEmpty();
     }
 }

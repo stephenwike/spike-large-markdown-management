@@ -10,7 +10,7 @@ public class TemplateFormatValidatorTests
 {
     [Theory]
     [ClassData(typeof(TemplateValidTestData))]
-    public void Validate_ValidTemplate_ShouldNotThrowException(string template)
+    public void Validate_ValidTemplate_ShouldNotThrowException(string[] template)
     {
         // Arrange
         var validator = new TemplateFormatValidator();
@@ -24,7 +24,7 @@ public class TemplateFormatValidatorTests
 
     [Theory]
     [ClassData(typeof(TemplateInvalidTestData))]
-    public void Validate_InvalidTemplate_ShouldThrowException(string template)
+    public void Validate_InvalidTemplate_ShouldThrowException(string[] template)
     {
         // Arrange
         var validator = new TemplateFormatValidator();

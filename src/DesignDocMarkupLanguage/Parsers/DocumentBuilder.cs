@@ -1,8 +1,6 @@
 using System.Text;
-using DesignDocMarkupLanguage.CLI;
 using DesignDocMarkupLanguage.Constants;
 using DesignDocMarkupLanguage.DataStructs;
-using DesignDocMarkupLanguage.Helpers;
 using DesignDocMarkupLanguage.Models;
 
 namespace DesignDocMarkupLanguage.Parsers;
@@ -25,9 +23,19 @@ public class DocumentBuilder
         return stringBuilder.ToString();
     }
 
+    /// <summary>
+    /// Given a template broken by newline into a string array,
+    /// and a template queue containing the queue of template steps,
+    /// will add content related to each step into the template.
+    /// </summary>
+    /// <param name="template">The template as a string array.</param>
+    /// <param name="templateQueue">Data structure containing template steps.</param>
+    /// <returns>Template array with content inserted based on template steps.</returns>
     public string[] Parse(string[] template, TemplateQueue templateQueue)
     {
         var queue = templateQueue.Queue;
+        if (!queue.Any()) return template;
+            
         var nextStep = queue.Dequeue();
         var document = new List<string>();
         for (var index = 0; index < template.Length; ++index)
