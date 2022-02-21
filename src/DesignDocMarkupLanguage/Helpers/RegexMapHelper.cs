@@ -7,6 +7,9 @@ public static class RegexMapHelper
 {
     public static TemplateStep MapTemplateStep(Match match, int index)
     {
+        if (!match.Success)
+            throw new SystemException("RegularMapHelper.MapTemplateStep is never supposed to be called with an unsuccessful Regex match.");
+        
         var step = new TemplateStep()
         {
             Depth = TemplateHelper.GetDepth(match.Groups["Tabs"].Value),
